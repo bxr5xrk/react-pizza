@@ -4,42 +4,24 @@ const Categories = () => {
     const [active, setActive] = useState(0);
 
     const pizzaCategories = [
-        {
-            id: 0,
-            title: "Всі",
-        },
-        {
-            id: 1,
-            title: "М'ясні",
-        },
-        {
-            id: 2,
-            title: "Вегетеріанські",
-        },
-        {
-            id: 3,
-            title: "Гриль",
-        },
-        {
-            id: 4,
-            title: "Гострі",
-        },
-        {
-            id: 5,
-            title: "Закриті",
-        },
+        "Всі",
+        "М'ясні",
+        "Вегетеріанські",
+        "Гриль",
+        "Гострі",
+        "Закриті",
     ];
 
     return (
         <div className="categories">
             <ul>
-                {pizzaCategories.map((i) => (
+                {pizzaCategories.map((category, i) => (
                     <li
-                        onClick={() => setActive(i.id)}
-                        className={active === i.id ? "active" : ""}
-                        key={i.id}
+                        onClick={() => setActive(i)}
+                        className={active === i ? "active" : ""}
+                        key={i}
                     >
-                        {i.title}
+                        {category}
                     </li>
                 ))}
             </ul>

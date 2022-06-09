@@ -10,7 +10,7 @@ function App() {
             <div className="content">
                 <div className="container">
                     <PizzaFilter />
-                    <PizzaList children='Pizza'/>
+                    <PizzaList children="Pizza" />
                 </div>
             </div>
         </div>

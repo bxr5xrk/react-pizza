@@ -4,7 +4,7 @@ const SortPizza = () => {
     const [openPopUp, setOpenPopUp] = useState(false);
     const [sortActive, setSortActive] = useState(0);
     const sortTypes = ["популярності", "ціні", "алфавіту"];
-    const selectedSort = sortTypes[sortActive]
+    const selectedSort = sortTypes[sortActive];
 
     const selectAndHide = (i) => {
         setOpenPopUp(false);
@@ -27,7 +27,9 @@ const SortPizza = () => {
                     />
                 </svg>
                 <b>Сортувати по:</b>
-                <span onClick={() => setOpenPopUp(!openPopUp)}>{selectedSort}</span>
+                <span onClick={() => setOpenPopUp(!openPopUp)}>
+                    {selectedSort}
+                </span>
             </div>
             {openPopUp && (
                 <div className="sort__popup">
