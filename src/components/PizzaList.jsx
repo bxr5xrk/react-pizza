@@ -21,7 +21,7 @@ const PizzaList = ({ children }) => {
             <h2 className="content__title">{children}</h2>
             <div className="content__items">
                 {isLoading
-                    ? [...new Array(6)].map((i) => <PizzaSkeleton key={i} />)
+                    ? [...new Array(6)].map((_, i) => <PizzaSkeleton key={i} />)
                     : pizza.map((data) => <Pizza key={data.id} {...data} />)}
             </div>
         </div>

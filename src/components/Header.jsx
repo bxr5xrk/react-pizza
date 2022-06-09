@@ -15,6 +15,8 @@ const Header = () => {
                         <p>Сама смачна піца</p>
                     </div>
                 </div>
+
+                {/* створити з цього новий компонент PizzaBasket */}
                 <div className="header__cart">
                     <a href="/cart.html" className="button button--cart">
                         <span>520 грн</span>

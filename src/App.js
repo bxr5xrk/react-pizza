@@ -1,6 +1,5 @@
 import Header from "./components/Header";
-import PizzaFilter from "./components/PizzaFilter";
-import PizzaList from "./components/PizzaList";
+import PizzaPage from "./pages/PizzaPage";
 import "./scss/app.scss";
 
 function App() {
@@ -9,8 +8,7 @@ function App() {
             <Header />
             <div className="content">
                 <div className="container">
-                    <PizzaFilter />
-                    <PizzaList children="Pizza" />
+                    <PizzaPage />
                 </div>
             </div>
         </div>

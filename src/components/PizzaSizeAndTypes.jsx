@@ -18,6 +18,7 @@ const PizzaSizeAndTypes = ({ sizes, pizzaTypes }) => {
                     </li>
                 ))}
             </ul>
+
             <p className="edges">Бортик</p>
             <ul>
                 {pizzaTypes.map((type, i) => (
