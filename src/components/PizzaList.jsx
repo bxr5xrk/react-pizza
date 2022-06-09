@@ -7,15 +7,8 @@ const PizzaList = ({ children }) => {
         <div>
             <h2 className="content__title">{children}</h2>
             <div className="content__items">
-                {pizza.map((p) => (
-                    <Pizza
-                        key={p.id}
-                        title={p.title}
-                        price={p.price}
-                        image={p.imageUrl}
-                        sizes={p.sizes}
-                        pizzaTypes={p.types}
-                    />
+                {pizza.map((data) => (
+                    <Pizza key={data.id} {...data} />
                 ))}
             </div>
         </div>

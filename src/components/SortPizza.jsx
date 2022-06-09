@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SortPizza = () => {
+    const [openPopUp, setOpenPopUp] = useState(false);
+    const [sortActive, setSortActive] = useState(0);
+    const sortTypes = ["популярності", "ціні", "алфавіту"];
+
+    const selectAndHide = (i) => {
+        setOpenPopUp(false);
+        setSortActive(i);
+    };
+
     return (
         <div className="sort">
             <div className="sort__label">
@@ -16,16 +25,24 @@ const SortPizza = () => {
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортировка по:</b>
-                <span>популярности</span>
+                <b>Сортувати по:</b>
+                <span onClick={() => setOpenPopUp(true)}>популярності</span>
             </div>
-            <div className="sort__popup">
-                <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
-                </ul>
-            </div>
+            {openPopUp && (
+                <div className="sort__popup">
+                    <ul>
+                        {sortTypes.map((sort, i) => (
+                            <li
+                                key={i}
+                                onClick={() => selectAndHide(i)}
+                                className={sortActive === i ? "active" : ""}
+                            >
+                                {sort}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };

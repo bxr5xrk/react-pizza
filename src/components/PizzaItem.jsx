@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PizzaSizeAndTypes from "./PizzaSizeAndTypes";
 
-const Pizza = ({ title, price, image, sizes, pizzaTypes }) => {
+const Pizza = ({ title, price, image, sizes, pizzaType }) => {
     const [counter, setCounter] = useState(0);
 
     return (
@@ -9,7 +9,7 @@ const Pizza = ({ title, price, image, sizes, pizzaTypes }) => {
             <img className="pizza-block__image" src={image} alt="Pizza" />
             <h4 className="pizza-block__title">{title}</h4>
 
-            <PizzaSizeAndTypes sizes={sizes} pizzaTypes={pizzaTypes} />
+            <PizzaSizeAndTypes sizes={sizes} pizzaTypes={pizzaType} />
 
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">{price} грн</div>
