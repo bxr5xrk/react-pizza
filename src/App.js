@@ -1,4 +1,8 @@
+import { Route } from "react-router-dom";
+import { Routes } from "react-router-dom";
 import Header from "./components/Header";
+import Cart from "./pages/Cart";
+import NotFound from "./pages/NotFound";
 import PizzaPage from "./pages/PizzaPage";
 import "./scss/app.scss";
 
@@ -8,7 +12,11 @@ function App() {
             <Header />
             <div className="content">
                 <div className="container">
-                    <PizzaPage />
+                    <Routes>
+                        <Route path="/" element={<PizzaPage />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
                 </div>
             </div>
         </div>
