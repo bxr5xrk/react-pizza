@@ -4,10 +4,26 @@
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
+  @media (max-width: 730px) {
+      padding: 8px 0;
+  }
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 730px) {
+      p {
+        display: none;
+      }
+
+      .categories {
+        li {
+          padding: 8px 20px;
+        }
+      }
+    }
   }
 
   &__logo {
