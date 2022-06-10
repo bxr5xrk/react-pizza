@@ -5,8 +5,10 @@ import PizzaList from "../components/PizzaList";
 const PizzaPage = () => {
     return (
         <div>
-            <PizzaFilter />
-            <PizzaList children="Pizza" />
+            <div className="container">
+                <PizzaFilter />
+                <PizzaList children="Pizza" />
+            </div>
         </div>
     );
 };

@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import st from "./NotFoundItems.module.scss";
+import st from "./NotFoundPage.module.scss";
 
-const NotFoundItems = () => {
+const NotFoundPage = () => {
     return (
         <div className={st.notFound}>
             <h1>Нічого не знайдено :(</h1>
@@ -13,4 +13,4 @@ const NotFoundItems = () => {
     );
 };
 
-export default NotFoundItems;
+export default NotFoundPage;

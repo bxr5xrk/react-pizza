@@ -14,6 +14,7 @@ const PizzaList = ({ children }) => {
                 setIsLoading(false);
                 setPizza(arr);
             });
+        window.scrollTo(0, 0);
     }, []);
 
     return (
