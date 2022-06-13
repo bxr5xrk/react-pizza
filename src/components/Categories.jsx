@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Categories = () => {
-    const [active, setActive] = useState(0);
-
+const Categories = ({ value, onChangeCategory }) => {
     const pizzaCategories = [
         "Всі",
         "М'ясні",
@@ -17,8 +15,8 @@ const Categories = () => {
             <ul>
                 {pizzaCategories.map((category, i) => (
                     <li
-                        onClick={() => setActive(i)}
-                        className={active === i ? "active" : ""}
+                        onClick={() => onChangeCategory(i)}
+                        className={value === i ? "active" : ""}
                         key={i}
                     >
                         {category}

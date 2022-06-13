@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 
-const SortPizza = () => {
+const Sort = ({ value, onChangeSort }) => {
     const [openPopUp, setOpenPopUp] = useState(false);
-    const [sortActive, setSortActive] = useState(0);
-    const sortTypes = ["популярності", "ціні", "алфавіту"];
-    const selectedSort = sortTypes[sortActive];
+    const sortTypes = [
+        { name: "популярності", sortProp: "rating" },
+        { name: "від дорогих до дешевих", sortProp: "price" },
+        { name: "від дешевих до дорогих", sortProp: "-price" },
+        { name: "алфавіту", sortProp: "title" },
+    ];
+    // const selectedSort = sortTypes[value];
 
     const selectAndHide = (i) => {
         setOpenPopUp(false);
-        setSortActive(i);
+        onChangeSort(i);
     };
 
     return (
@@ -28,19 +32,23 @@ const SortPizza = () => {
                 </svg>
                 <b>Сортувати по:</b>
                 <span onClick={() => setOpenPopUp(!openPopUp)}>
-                    {selectedSort}
+                    {value.name}
                 </span>
             </div>
             {openPopUp && (
                 <div className="sort__popup">
                     <ul>
-                        {sortTypes.map((sort, i) => (
+                        {sortTypes.map((obj, i) => (
                             <li
                                 key={i}
-                                onClick={() => selectAndHide(i)}
-                                className={sortActive === i ? "active" : ""}
+                                onClick={() => selectAndHide(obj)}
+                                className={
+                                    value.sortProp === obj.sortProp
+                                        ? "active"
+                                        : ""
+                                }
                             >
-                                {sort}
+                                {obj.name}
                             </li>
                         ))}
                     </ul>
@@ -50,4 +58,4 @@ const SortPizza = () => {
     );
 };
 
-export default SortPizza;
+export default Sort;

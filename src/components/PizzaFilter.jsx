@@ -1,13 +1,10 @@
 import React from "react";
-import Categories from "./Categories";
-import SortPizza from "./SortPizza";
+// import Categories from "./Categories";
+// import Sort from "./Sort";
 
-const PizzaFilter = () => {
+const PizzaFilter = ({value, onClickCategory}) => {
     return (
-        <div className="content__top">
-            <Categories />
-            <SortPizza />
-        </div>
+        <></>
     );
 };
 
