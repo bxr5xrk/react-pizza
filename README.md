@@ -1,4 +1,4 @@
 # React Pizza
 
-### `npm start`
+### `npm run start`
 
