@@ -16,12 +16,13 @@ const PizzaList = ({ children }) => {
     // move to other file component in folder API
     useEffect(() => {
         setIsLoading(true);
+
+        const category = categoryId > 0 ? `category=${categoryId}` : "";
+        const sort = sortType.sortProp.replace("-", "");
+        const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
+
         fetch(
-            `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${
-                categoryId > 0 ? `category=${categoryId}` : ""
-            }&sortBy=${sortType.sortProp.replace("-", "")}&order=${
-                sortType.sortProp.includes("-") ? "asc" : "desc"
-            }`
+            `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}&sortBy=${sort}&order=${sortOrder}`
         )
             .then((res) => res.json())
             .then((arr) => {
