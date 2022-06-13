@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 const Sort = ({ value, onChangeSort }) => {
     const [openPopUp, setOpenPopUp] = useState(false);
+
     const sortTypes = [
-        { name: "популярності", sortProp: "rating" },
+        { name: "за популярністю", sortProp: "rating" },
         { name: "від дорогих до дешевих", sortProp: "price" },
         { name: "від дешевих до дорогих", sortProp: "-price" },
-        { name: "алфавіту", sortProp: "title" },
+        { name: "за алфавітом", sortProp: "title" },
     ];
-    // const selectedSort = sortTypes[value];
 
     const selectAndHide = (i) => {
         setOpenPopUp(false);
@@ -30,7 +30,7 @@ const Sort = ({ value, onChangeSort }) => {
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортувати по:</b>
+                <b>Сортувати:</b>
                 <span onClick={() => setOpenPopUp(!openPopUp)}>
                     {value.name}
                 </span>

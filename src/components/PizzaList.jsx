@@ -6,10 +6,14 @@ import Sort from "./Sort";
 
 const PizzaList = ({ children }) => {
     const [pizza, setPizza] = useState([]);
+
+    // for skeleton
     const [isLoading, setIsLoading] = useState(true);
+
+    // global state
     const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState({
-        name: "популярності",
+        name: "за популярністю",
         sortProp: "rating",
     });
 
@@ -44,8 +48,8 @@ const PizzaList = ({ children }) => {
             <h2 className="content__title">{children}</h2>
             <div className="content__items">
                 {isLoading
-                    ? [...new Array(6)].map((_, i) => <PizzaSkeleton key={i} />)
-                    : pizza.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
+                    ? [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />)
+                    : pizza.map((item) => <Pizza key={item.id} {...item} />)}
             </div>
         </div>
     );
