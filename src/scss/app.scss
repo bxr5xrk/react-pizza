@@ -361,18 +361,17 @@ body {
   }
 }
 
-
-.not-found__container {
-  height: 100px;
-  display: flex;
-  // width:55vw;
-  display: flex;
-  justify-content: center;
-}
-
 .not-found {
-  // position: absolute;
-  top: 20px;
-  font-size: 60px;
+  margin: 70px 0;
   text-align: center;
+
+  &__title {
+    font-size: 60px;
+  }
+
+  &__bottom-text {
+    font-size: 30px;
+    text-align: center;
+    opacity: 0.7;
+  }
 }

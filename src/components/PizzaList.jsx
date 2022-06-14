@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Categories from "./Categories";
+import PizzaFilter from "./PizzaFilter";
 import Pizza from "./PizzaItem";
 import PizzaSkeleton from "./PizzaSkeleton";
-import Sort from "./Sort";
 
 const PizzaList = ({ children, searchValue }) => {
     const [pizza, setPizza] = useState([]);
@@ -25,7 +24,9 @@ const PizzaList = ({ children, searchValue }) => {
                 ? item.title.toLowerCase().includes(searchValue.toLowerCase())
                 : item
         )
-        .map((item) => item?  <Pizza key={item.id} {...item} /> : <div>not found</div>);
+        .map((item) =>
+            item ? <Pizza key={item.id} {...item} /> : <div>not found</div>
+        );
 
     // move to other file component in folder API
     useEffect(() => {
@@ -34,9 +35,8 @@ const PizzaList = ({ children, searchValue }) => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sort = sortType.sortProp.replace("-", "");
         const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
-        // make not found pizza text
-        // const showPizza = !filterPizza.length ? <div className="not-found__container"><div className="not-found">Не знайдено піц :(</div></div>  : filterPizza
 
+        // get pizza from mocapi
         fetch(
             `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}&sortBy=${sort}&order=${sortOrder}`
         )
@@ -50,17 +50,26 @@ const PizzaList = ({ children, searchValue }) => {
 
     return (
         <div>
-            <div className="content__top">
-                <Categories
-                    value={categoryId}
-                    onChangeCategory={(id) => setCategoryId(id)}
-                />
-                <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
-            </div>
+            <PizzaFilter
+                categoryId={categoryId}
+                sortType={sortType}
+                setCategoryId={setCategoryId}
+                setSortType={setSortType}
+            />
+
             <h2 className="content__title">{children}</h2>
-            <div className="content__items">
-                {isLoading ? skeleton : filterPizza}
-            </div>
+            {isLoading ? (
+                <div className="content__items">{skeleton}</div>
+            ) : !filterPizza.length ? (
+                <div className="not-found">
+                    <h1 className="not-found__title">Нічого не знайдено :(</h1>
+                    <span className="not-found__bottom-text">
+                        Спробуйте ще раз
+                    </span>
+                </div>
+            ) : (
+                <div className="content__items">{filterPizza}</div>
+            )}
         </div>
     );
 };
