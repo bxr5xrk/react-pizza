@@ -4,7 +4,7 @@ import Pizza from "./PizzaItem";
 import PizzaSkeleton from "./PizzaSkeleton";
 import Sort from "./Sort";
 
-const PizzaList = ({ children }) => {
+const PizzaList = ({ children, searchValue }) => {
     const [pizza, setPizza] = useState([]);
 
     // for skeleton
@@ -16,6 +16,8 @@ const PizzaList = ({ children }) => {
         name: "за популярністю",
         sortProp: "rating",
     });
+
+    const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
 
     // move to other file component in folder API
     useEffect(() => {
@@ -48,8 +50,16 @@ const PizzaList = ({ children }) => {
             <h2 className="content__title">{children}</h2>
             <div className="content__items">
                 {isLoading
-                    ? [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />)
-                    : pizza.map((item) => <Pizza key={item.id} {...item} />)}
+                    ? skeleton
+                    : pizza
+                          .filter((item) =>
+                              searchValue
+                                  ? item.title
+                                        .toLowerCase()
+                                        .includes(searchValue.toLowerCase())
+                                  : item
+                          )
+                          .map((item) => <Pizza key={item.id} {...item} />)}
             </div>
         </div>
     );
