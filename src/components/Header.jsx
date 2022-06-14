@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PizzaSearch from "./Search/PizzaSearch";
 
-const Header = () => {
+const Header = ({ searchValue, setSearchValue }) => {
     return (
         <div className="header">
             <div className="container">
@@ -18,6 +19,11 @@ const Header = () => {
                         </div>
                     </div>
                 </Link>
+
+                <PizzaSearch
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                />
 
                 {/* створити з цього новий компонент PizzaBasket */}
                 <Link to="/cart">
@@ -54,7 +60,7 @@ const Header = () => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            <span>3</span>
+                            <span>2</span>
                         </div>
                     </div>
                 </Link>
