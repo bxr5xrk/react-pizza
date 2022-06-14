@@ -360,3 +360,19 @@ body {
     }
   }
 }
+
+
+.not-found__container {
+  height: 100px;
+  display: flex;
+  // width:55vw;
+  display: flex;
+  justify-content: center;
+}
+
+.not-found {
+  // position: absolute;
+  top: 20px;
+  font-size: 60px;
+  text-align: center;
+}
