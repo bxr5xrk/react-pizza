@@ -1,13 +1,14 @@
 import React from "react";
+import st from "./Pagination.module.scss";
 
 const Pagination = ({ itemsCount, limit, onChangePage, currentPage }) => {
     const pages = Math.ceil(itemsCount / limit);
 
     return (
-        <div className="pagination">
+        <div className={st.pagination}>
             {currentPage > 1 ? (
                 <span
-                    className="page"
+                    className={st.page}
                     onClick={() => onChangePage(currentPage - 1)}
                 >
                     {"<"}
@@ -22,8 +23,8 @@ const Pagination = ({ itemsCount, limit, onChangePage, currentPage }) => {
                         onClick={() => onChangePage(p + 1)}
                         className={
                             p + 1 === currentPage
-                                ? "page page-selected"
-                                : "page"
+                                ? `${st.page} ${st.page__selected}`
+                                : st.page
                         }
                         key={p}
                     >
@@ -33,7 +34,7 @@ const Pagination = ({ itemsCount, limit, onChangePage, currentPage }) => {
 
             {currentPage < pages ? (
                 <span
-                    className="page"
+                    className={st.page}
                     onClick={() => onChangePage(currentPage + 1)}
                 >
                     {">"}
