@@ -30,6 +30,7 @@ const Pagination = ({ itemsCount, limit, onChangePage, currentPage }) => {
                         {p + 1}
                     </span>
                 ))}
+
             {currentPage < pages ? (
                 <span
                     className="page"

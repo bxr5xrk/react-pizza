@@ -1,6 +1,7 @@
 import React from "react";
 import st from "./PizzaSearch.module.scss";
 
+// improve search using useDebounce 
 const PizzaSearch = ({ searchValue, setSearchValue }) => {
     return (
         <div className={st.container}>
