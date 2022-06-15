@@ -3,30 +3,40 @@ import PizzaFilter from "./PizzaFilter";
 import Pizza from "./PizzaItem";
 import PizzaSkeleton from "./PizzaSkeleton";
 
-const PizzaList = ({ children, searchValue }) => {
+const PizzaList = ({ title, searchValue }) => {
+    // pizza object
     const [pizza, setPizza] = useState([]);
 
     // for skeleton
     const [isLoading, setIsLoading] = useState(true);
 
-    // global state
+    // global state for sort and categories
     const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState({
         name: "за популярністю",
         sortProp: "rating",
     });
 
+    // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
 
+    const notFoundBlock = () => {
+        return (
+            <div className="not-found">
+                <h1 className="not-found__title">Нічого не знайдено :(</h1>
+                <span className="not-found__bottom-text">Спробуйте ще раз</span>
+            </div>
+        );
+    };
+
+    // show only those pizzas, that match search
     const filterPizza = pizza
         .filter((item) =>
             searchValue
                 ? item.title.toLowerCase().includes(searchValue.toLowerCase())
                 : item
         )
-        .map((item) =>
-            item ? <Pizza key={item.id} {...item} /> : <div>not found</div>
-        );
+        .map((item) => <Pizza key={item.id} {...item} />);
 
     // move to other file component in folder API
     useEffect(() => {
@@ -45,6 +55,7 @@ const PizzaList = ({ children, searchValue }) => {
                 setIsLoading(false);
                 setPizza(arr);
             });
+
         window.scrollTo(0, 0);
     }, [categoryId, sortType]);
 
@@ -57,16 +68,11 @@ const PizzaList = ({ children, searchValue }) => {
                 setSortType={setSortType}
             />
 
-            <h2 className="content__title">{children}</h2>
+            <h2 className="content__title">{title}</h2>
             {isLoading ? (
-                <div className="content__items">{skeleton}</div>
+                <div className="content__items">{skeleton} </div>
             ) : !filterPizza.length ? (
-                <div className="not-found">
-                    <h1 className="not-found__title">Нічого не знайдено :(</h1>
-                    <span className="not-found__bottom-text">
-                        Спробуйте ще раз
-                    </span>
-                </div>
+                notFoundBlock
             ) : (
                 <div className="content__items">{filterPizza}</div>
             )}

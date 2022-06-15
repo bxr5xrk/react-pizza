@@ -5,7 +5,7 @@ const PizzaPage = ({ searchValue }) => {
     return (
         <div>
             <div className="container">
-                <PizzaList children="Pizza" searchValue={searchValue} />
+                <PizzaList title="Pizza" searchValue={searchValue} />
             </div>
         </div>
     );
