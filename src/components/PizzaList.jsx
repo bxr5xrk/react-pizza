@@ -30,15 +30,25 @@ const PizzaList = ({ title, searchValue }) => {
         )
         .map((item) => <Pizza key={item.id} {...item} />);
 
-    const [totalPages, setTotalPages] = useState([]);
+    // for pagination
+    const [totalPages, setTotalPages] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const limit = 4;
 
-    // move to other file component in folder API
+    const category = categoryId > 0 ? `category=${categoryId}` : "";
+
+    // get pizza count in selected category
+    useEffect(() => {
+        fetch(`https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}`)
+            .then((res) => res.json())
+            .then((arr) => {
+                setTotalPages(arr.length);
+            });
+    }, [category]);
+
     useEffect(() => {
         setIsLoading(true);
 
-        const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sort = sortType.sortProp.replace("-", "");
         const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
         const pageLimit = `&p=${currentPage}&l=${limit}`;
@@ -54,15 +64,8 @@ const PizzaList = ({ title, searchValue }) => {
                 setPizza(arr);
             });
 
-        // get pizza count
-        fetch(`https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}`)
-            .then((res) => res.json())
-            .then((arr) => {
-                setTotalPages(arr.length);
-            });
-
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, currentPage, totalPages, searchValue]);
+    }, [category, sortType, currentPage, searchValue]);
 
     return (
         <div>
