@@ -1,6 +1,6 @@
 import React from "react";
 
-const Categories = ({ value, onChangeCategory }) => {
+const Categories = ({ value, onChangeCategory, setCurrentPage }) => {
     const pizzaCategories = [
         "Всі",
         "М'ясні",
@@ -10,12 +10,17 @@ const Categories = ({ value, onChangeCategory }) => {
         "Закриті",
     ];
 
+    const onChangeValue = (i) => {
+        onChangeCategory(i);
+        setCurrentPage(1);
+    };
+
     return (
         <div className="categories">
             <ul>
                 {pizzaCategories.map((category, i) => (
                     <li
-                        onClick={() => onChangeCategory(i)}
+                        onClick={() => onChangeValue(i)}
                         className={value === i ? "active" : ""}
                         key={i}
                     >
