@@ -6,28 +6,24 @@
 
   @media (max-width: 730px) {
       padding: 8px 0;
+
+      .container {
+        p {
+          display: none;
+        }
+  
+        .categories {
+          li {
+            padding: 8px 20px;
+          }
+        }
+      }
   }
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    @media (max-width: 910px) {
-      flex-direction: column;
-    }
-
-    @media (max-width: 730px) {
-      p {
-        display: none;
-      }
-
-      .categories {
-        li {
-          padding: 8px 20px;
-        }
-      }
-    }
   }
 
   &__logo {
