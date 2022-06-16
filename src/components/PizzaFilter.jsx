@@ -1,5 +1,6 @@
 import React from "react";
 import Categories from "./Categories";
+import PizzaSearch from "./Search/PizzaSearch";
 import Sort from "./Sort";
 
 const PizzaFilter = ({
@@ -11,12 +12,18 @@ const PizzaFilter = ({
 }) => {
     return (
         <div className="content__top">
-            <Categories
-                value={categoryId}
-                onChangeCategory={(id) => setCategoryId(id)}
-                setCurrentPage={setCurrentPage}
-            />
-            <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
+             <PizzaSearch />
+
+            <div>
+                <Categories
+                    value={categoryId}
+                    onChangeCategory={(id) => setCategoryId(id)}
+                    setCurrentPage={setCurrentPage}
+                />
+                <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
+            </div>
+
+           
         </div>
     );
 };

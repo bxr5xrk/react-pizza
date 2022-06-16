@@ -9,6 +9,7 @@ const PizzaList = ({ title }) => {
     // pizza object
     const [pizza, setPizza] = useState([]);
 
+    // getting global value for pizza search
     const { searchValue } = useContext(SearchContext);
 
     // for skeleton

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PizzaSearch from "./Search/PizzaSearch";
 
 const Header = () => {
     return (
@@ -19,8 +18,6 @@ const Header = () => {
                         </div>
                     </div>
                 </Link>
-
-                <PizzaSearch />
 
                 {/* створити з цього новий компонент PizzaBasket */}
                 <Link to="/cart">

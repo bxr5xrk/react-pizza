@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import PizzaList from "./pages/PizzaList";
 import Cart from "./pages/Cart";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
-// import PizzaPage from "./pages/PizzaPage";
 import "./scss/app.scss";
 
 export const SearchContext = createContext();
