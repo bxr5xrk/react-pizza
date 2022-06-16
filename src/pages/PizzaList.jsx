@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Pagination from "./Pagination/Pagination";
-import PizzaFilter from "./PizzaFilter";
-import Pizza from "./PizzaItem";
-import PizzaSkeleton from "./PizzaSkeleton";
+import React, { useContext, useEffect, useState } from "react";
+import { SearchContext } from "../App";
+import Pagination from "../components/Pagination/Pagination";
+import PizzaFilter from "../components/PizzaFilter";
+import Pizza from "../components/PizzaItem";
+import PizzaSkeleton from "../components/PizzaSkeleton";
 
-const PizzaList = ({ title, searchValue }) => {
+const PizzaList = ({ title }) => {
     // pizza object
     const [pizza, setPizza] = useState([]);
+
+    const { searchValue } = useContext(SearchContext);
 
     // for skeleton
     const [isLoading, setIsLoading] = useState(true);
@@ -68,7 +71,7 @@ const PizzaList = ({ title, searchValue }) => {
     }, [category, sortType, currentPage, searchValue]);
 
     return (
-        <div>
+        <div className="container">
             <PizzaFilter
                 categoryId={categoryId}
                 sortType={sortType}

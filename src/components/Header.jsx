@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PizzaSearch from "./Search/PizzaSearch";
 
-const Header = ({ searchValue, setSearchValue }) => {
+const Header = () => {
     return (
         <div className="header">
             <div className="container">
@@ -20,10 +20,7 @@ const Header = ({ searchValue, setSearchValue }) => {
                     </div>
                 </Link>
 
-                <PizzaSearch
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                />
+                <PizzaSearch />
 
                 {/* створити з цього новий компонент PizzaBasket */}
                 <Link to="/cart">

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { SearchContext } from "../../App";
 import st from "./PizzaSearch.module.scss";
 
 // improve search using useDebounce 
-const PizzaSearch = ({ searchValue, setSearchValue }) => {
+const PizzaSearch = () => {
+    const {searchValue, setSearchValue} = useContext(SearchContext)
+
     return (
         <div className={st.container}>
             <svg
