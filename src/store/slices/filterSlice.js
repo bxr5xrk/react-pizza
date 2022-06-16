@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     categoryId: 0,
     sortType: { name: "за популярністю", sortProp: "rating" },
-    page: 1
+    page: 1,
 };
 
 const filterSlice = createSlice({
@@ -17,8 +17,8 @@ const filterSlice = createSlice({
             state.sortType = action.payload;
         },
         onChangePage(state, action) {
-          state.page = action.payload;
-      },
+            state.page = action.payload;
+        },
     },
 });
 
