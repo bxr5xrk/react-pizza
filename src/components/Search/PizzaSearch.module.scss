@@ -1,15 +1,15 @@
 .container {
     position: relative;
 
-    @media (max-width: 910px) {
-        order: 3;
-        margin-top: 20px;
-        width: 100%;
+    // @media (max-width: 910px) {
+    //     order: 3;
+    //     margin-top: 20px;
+    //     width: 100%;
 
-        .search {
-            width: 100%;
-        }
-    }
+    //     .search {
+    //         width: 100%;
+    //     }
+    // }
 }
 
 .search {

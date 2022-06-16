@@ -55,9 +55,12 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 1260px) {
+    @media (max-width: 1300px) {
+      flex-direction: column;
 
       .categories {
+        display: flex;
+        margin-top: 20px;
         width: 100%;
         overflow: scroll;
         ul {
