@@ -1,18 +1,27 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { onChangePage, setCategoryId } from "../store/slices/filterSlice";
 
-const Categories = ({ value, onChangeCategory, setCurrentPage }) => {
-    const pizzaCategories = [
-        "Всі",
-        "М'ясні",
-        "Вегетеріанські",
-        "Гриль",
-        "Гострі",
-        "Закриті",
-    ];
+const pizzaCategories = [
+    "Всі",
+    "М'ясні",
+    "Вегетеріанські",
+    "Гриль",
+    "Гострі",
+    "Закриті",
+];
+
+const Categories = () => {
+    const categoryId = useSelector((state) => state.filterSlice.categoryId);
+
+    const dispatch = useDispatch();
+    const onClickCategory = (id) => dispatch(setCategoryId(id));
+
+    const setPage = (page) => dispatch(onChangePage(page));
 
     const onChangeValue = (i) => {
-        onChangeCategory(i);
-        setCurrentPage(1);
+        onClickCategory(i);
+        setPage(1);
     };
 
     return (
@@ -21,7 +30,7 @@ const Categories = ({ value, onChangeCategory, setCurrentPage }) => {
                 {pizzaCategories.map((category, i) => (
                     <li
                         onClick={() => onChangeValue(i)}
-                        className={value === i ? "active" : ""}
+                        className={categoryId === i ? "active" : ""}
                         key={i}
                     >
                         {category}

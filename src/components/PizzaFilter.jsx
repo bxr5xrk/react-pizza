@@ -3,27 +3,15 @@ import Categories from "./Categories";
 import PizzaSearch from "./Search/PizzaSearch";
 import Sort from "./Sort";
 
-const PizzaFilter = ({
-    categoryId,
-    sortType,
-    setCategoryId,
-    setSortType,
-    setCurrentPage,
-}) => {
+const PizzaFilter = () => {
     return (
         <div className="content__top">
-             <PizzaSearch />
+            <PizzaSearch />
 
             <div>
-                <Categories
-                    value={categoryId}
-                    onChangeCategory={(id) => setCategoryId(id)}
-                    setCurrentPage={setCurrentPage}
-                />
-                <Sort value={sortType} onChangeSort={(id) => setSortType(id)} />
+                <Categories />
+                <Sort />
             </div>
-
-           
         </div>
     );
 };
