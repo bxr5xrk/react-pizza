@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { SearchContext } from "../App";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
@@ -16,11 +17,7 @@ const PizzaList = ({ title }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     // global state for sort and categories
-    const [categoryId, setCategoryId] = useState(0);
-    const [sortType, setSortType] = useState({
-        name: "за популярністю",
-        sortProp: "rating",
-    });
+    const { categoryId, sortType } = useSelector((state) => state.filterSlice);
 
     // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
@@ -34,21 +31,11 @@ const PizzaList = ({ title }) => {
         )
         .map((item) => <Pizza key={item.id} {...item} />);
 
-    // for pagination
-    const [totalPages, setTotalPages] = useState();
-    const [currentPage, setCurrentPage] = useState(1);
+    const currentPage = useSelector((state) => state.filterSlice.page);
+
     const limit = 4;
 
     const category = categoryId > 0 ? `category=${categoryId}` : "";
-
-    // get pizza count in selected category
-    useEffect(() => {
-        fetch(`https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}`)
-            .then((res) => res.json())
-            .then((arr) => {
-                setTotalPages(arr.length);
-            });
-    }, [category]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -69,17 +56,11 @@ const PizzaList = ({ title }) => {
             });
 
         window.scrollTo(0, 0);
-    }, [category, sortType, currentPage, searchValue]);
+    }, [category, sortType.sortProp, currentPage, searchValue]);
 
     return (
         <div className="container">
-            <PizzaFilter
-                categoryId={categoryId}
-                sortType={sortType}
-                setCategoryId={setCategoryId}
-                setSortType={setSortType}
-                setCurrentPage={setCurrentPage}
-            />
+            <PizzaFilter />
 
             <h2 className="content__title">{title}</h2>
 
@@ -96,12 +77,7 @@ const PizzaList = ({ title }) => {
                 <div className="content__items">{filterPizza}</div>
             )}
 
-            <Pagination
-                itemsCount={totalPages}
-                limit={4}
-                onChangePage={(p) => setCurrentPage(p)}
-                currentPage={currentPage}
-            />
+            <Pagination category={category} limit={4} />
         </div>
     );
 };
