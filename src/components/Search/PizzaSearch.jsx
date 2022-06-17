@@ -1,20 +1,32 @@
-import React, { useContext, useRef } from "react";
+import debounce from "lodash.debounce";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import { SearchContext } from "../../App";
 import st from "./PizzaSearch.module.scss";
 
 const PizzaSearch = () => {
-    const { searchValue, setSearchValue } = useContext(SearchContext);
+    const [value, setValue] = useState("");
+    const { setSearchValue } = useContext(SearchContext);
 
     const searchPizzaRef = useRef();
 
     const onClickClearBtn = () => {
         setSearchValue("");
+        setValue("");
         searchPizzaRef.current.focus();
     };
 
-    const onChangeInput = (e) => {
-        setSearchValue(e.target.value)
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const updateSearchValue = useCallback(
+        debounce((search) => {
+            setSearchValue(search);
+        }, 500),
+        []
+    );
+
+    const onChangeInput = (event) => {
+        setValue(event.target.value);
+        updateSearchValue(event.target.value);
+    };
 
     return (
         <div className={st.container}>
@@ -30,12 +42,12 @@ const PizzaSearch = () => {
             </svg>
             <input
                 ref={searchPizzaRef}
-                value={searchValue}
+                value={value}
                 onChange={onChangeInput}
                 className={st.search}
                 placeholder="Знайти піцу..."
             />
-            {searchValue && (
+            {value && (
                 <svg
                     onClick={onClickClearBtn}
                     className={st.closeIcon}
