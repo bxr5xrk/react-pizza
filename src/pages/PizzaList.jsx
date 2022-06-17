@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SearchContext } from "../App";
@@ -7,7 +8,7 @@ import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
 
 const PizzaList = ({ title }) => {
-    // pizza object
+    // pizza array
     const [pizza, setPizza] = useState([]);
 
     // getting global value for pizza search
@@ -23,7 +24,7 @@ const PizzaList = ({ title }) => {
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
 
     // show only those pizzas, that match search
-    const filterPizza = pizza
+    const filteredPizza = pizza
         .filter((item) =>
             searchValue
                 ? item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -45,18 +46,24 @@ const PizzaList = ({ title }) => {
         const pageLimit = `&p=${currentPage}&l=${limit}`;
         const searchPizza = searchValue ? "" : pageLimit;
 
-        // get pizza from mocapi
-        fetch(
-            `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
-        )
-            .then((res) => res.json())
-            .then((arr) => {
+        axios
+            .get(
+                `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
+            )
+            .then((res) => {
                 setIsLoading(false);
-                setPizza(arr);
+                setPizza(res.data);
             });
 
         window.scrollTo(0, 0);
     }, [category, sortType.sortProp, currentPage, searchValue]);
+
+    const nothingFound = (
+        <div className="not-found">
+            <h1 className="not-found__title">Нічого не знайдено :(</h1>
+            <span className="not-found__bottom-text">Спробуйте ще раз</span>
+        </div>
+    );
 
     return (
         <div className="container">
@@ -66,15 +73,10 @@ const PizzaList = ({ title }) => {
 
             {isLoading ? (
                 <div className="content__items">{skeleton}</div>
-            ) : !filterPizza.length ? (
-                <div className="not-found">
-                    <h1 className="not-found__title">Нічого не знайдено :(</h1>
-                    <span className="not-found__bottom-text">
-                        Спробуйте ще раз
-                    </span>
-                </div>
+            ) : !filteredPizza.length ? (
+                nothingFound
             ) : (
-                <div className="content__items">{filterPizza}</div>
+                <div className="content__items">{filteredPizza}</div>
             )}
 
             <Pagination category={category} limit={4} />

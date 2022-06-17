@@ -1,10 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { SearchContext } from "../../App";
 import st from "./PizzaSearch.module.scss";
 
-// improve search using useDebounce 
 const PizzaSearch = () => {
-    const {searchValue, setSearchValue} = useContext(SearchContext)
+    const { searchValue, setSearchValue } = useContext(SearchContext);
+
+    const searchPizzaRef = useRef();
+
+    const onClickClearBtn = () => {
+        setSearchValue("");
+        searchPizzaRef.current.focus();
+    };
+
+    const onChangeInput = (e) => {
+        setSearchValue(e.target.value)
+    }
 
     return (
         <div className={st.container}>
@@ -19,14 +29,15 @@ const PizzaSearch = () => {
                 <path d="M0 0h48v48h-48z" fill="none" />
             </svg>
             <input
+                ref={searchPizzaRef}
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={onChangeInput}
                 className={st.search}
                 placeholder="Знайти піцу..."
             />
             {searchValue && (
                 <svg
-                    onClick={() => setSearchValue("")}
+                    onClick={onClickClearBtn}
                     className={st.closeIcon}
                     height="22"
                     viewBox="0 0 200 200"
