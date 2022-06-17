@@ -2,32 +2,36 @@ import debounce from "lodash.debounce";
 import React, { useCallback, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import st from "./PizzaSearch.module.scss";
-import { setSearchValu } from "../../store/slices/filterSlice";
+import { onChangeSearchValue } from "../../store/slices/filterSlice";
 
 const PizzaSearch = () => {
-    const [value, setValue] = useState("");
+    // local value for correct display search query
+    const [_value, _setValue] = useState("");
 
+    // for change search query
     const dispatch = useDispatch();
-    const setSearchValue = (search) => dispatch(setSearchValu(search));
+    const setSearchValue = (searchValue) =>
+        dispatch(onChangeSearchValue(searchValue));
 
     const searchPizzaRef = useRef();
 
+    // for focus after user clicked clear input
     const onClickClearBtn = () => {
         setSearchValue("");
-        setValue("");
+        _setValue("");
         searchPizzaRef.current.focus();
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const updateSearchValue = useCallback(
-        debounce((search) => {
-            setSearchValue(search);
+        debounce((searchValue) => {
+            setSearchValue(searchValue);
         }, 500),
         []
     );
 
     const onChangeInput = (event) => {
-        setValue(event.target.value);
+        _setValue(event.target.value);
         updateSearchValue(event.target.value);
     };
 
@@ -45,12 +49,12 @@ const PizzaSearch = () => {
             </svg>
             <input
                 ref={searchPizzaRef}
-                value={value}
+                value={_value}
                 onChange={onChangeInput}
                 className={st.search}
                 placeholder="Знайти піцу..."
             />
-            {value && (
+            {_value && (
                 <svg
                     onClick={onClickClearBtn}
                     className={st.closeIcon}

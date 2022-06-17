@@ -10,13 +10,13 @@ const PizzaList = ({ title }) => {
     // pizza array
     const [pizza, setPizza] = useState([]);
 
-    // for skeleton
-    const [isLoading, setIsLoading] = useState(true);
-
     // global state for sort and categories
-    const { categoryId, sortType, searchValue } = useSelector(
+    const { categoryId, sortType, searchValue, CurrentPage } = useSelector(
         (state) => state.filterSlice
     );
+
+    // for skeleton
+    const [isLoading, setIsLoading] = useState(true);
 
     // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
@@ -30,18 +30,18 @@ const PizzaList = ({ title }) => {
         )
         .map((item) => <Pizza key={item.id} {...item} />);
 
-    const currentPage = useSelector((state) => state.filterSlice.page);
+    const limitItemsOnPage = 4;
 
-    const limit = 4;
-
+    // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
 
+    // get pizza from server
     useEffect(() => {
         setIsLoading(true);
 
         const sort = sortType.sortProp.replace("-", "");
         const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
-        const pageLimit = `&p=${currentPage}&l=${limit}`;
+        const pageLimit = `&p=${CurrentPage}&l=${limitItemsOnPage}`;
         const searchPizza = searchValue ? "" : pageLimit;
 
         axios
@@ -54,8 +54,9 @@ const PizzaList = ({ title }) => {
             });
 
         window.scrollTo(0, 0);
-    }, [category, sortType.sortProp, currentPage, searchValue]);
+    }, [category, sortType.sortProp, CurrentPage, searchValue]);
 
+    // block if nothing found
     const nothingFound = (
         <div className="not-found">
             <h1 className="not-found__title">Нічого не знайдено :(</h1>
@@ -77,7 +78,7 @@ const PizzaList = ({ title }) => {
                 <div className="content__items">{filteredPizza}</div>
             )}
 
-            <Pagination category={category} limit={4} />
+            <Pagination category={category} limit={limitItemsOnPage} />
         </div>
     );
 };
