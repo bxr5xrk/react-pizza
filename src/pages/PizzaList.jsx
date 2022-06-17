@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { SearchContext } from "../App";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
@@ -11,14 +10,13 @@ const PizzaList = ({ title }) => {
     // pizza array
     const [pizza, setPizza] = useState([]);
 
-    // getting global value for pizza search
-    const { searchValue } = useContext(SearchContext);
-
     // for skeleton
     const [isLoading, setIsLoading] = useState(true);
 
     // global state for sort and categories
-    const { categoryId, sortType } = useSelector((state) => state.filterSlice);
+    const { categoryId, sortType, searchValue } = useSelector(
+        (state) => state.filterSlice
+    );
 
     // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);

@@ -1,11 +1,14 @@
 import debounce from "lodash.debounce";
-import React, { useCallback, useContext, useRef, useState } from "react";
-import { SearchContext } from "../../App";
+import React, { useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import st from "./PizzaSearch.module.scss";
+import { setSearchValu } from "../../store/slices/filterSlice";
 
 const PizzaSearch = () => {
     const [value, setValue] = useState("");
-    const { setSearchValue } = useContext(SearchContext);
+
+    const dispatch = useDispatch();
+    const setSearchValue = (search) => dispatch(setSearchValu(search));
 
     const searchPizzaRef = useRef();
 
