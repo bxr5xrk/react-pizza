@@ -11,7 +11,7 @@ const PizzaList = ({ title }) => {
     const [pizza, setPizza] = useState([]);
 
     // global state for sort and categories
-    const { categoryId, sortType, searchValue, CurrentPage } = useSelector(
+    const { categoryId, sortType, searchValue, currentPage } = useSelector(
         (state) => state.filterSlice
     );
 
@@ -41,7 +41,7 @@ const PizzaList = ({ title }) => {
 
         const sort = sortType.sortProp.replace("-", "");
         const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
-        const pageLimit = `&p=${CurrentPage}&l=${limitItemsOnPage}`;
+        const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
         const searchPizza = searchValue ? "" : pageLimit;
 
         axios
@@ -54,7 +54,7 @@ const PizzaList = ({ title }) => {
             });
 
         window.scrollTo(0, 0);
-    }, [category, sortType.sortProp, CurrentPage, searchValue]);
+    }, [category, sortType.sortProp, currentPage, searchValue]);
 
     // block if nothing found
     const nothingFound = (

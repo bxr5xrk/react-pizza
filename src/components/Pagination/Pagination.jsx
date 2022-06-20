@@ -17,7 +17,7 @@ const Pagination = ({ category, limit }) => {
 
     const pages = Math.ceil(totalPages / limit);
 
-    const currentPage = useSelector((state) => state.filterSlice.page);
+    const currentPage = useSelector((state) => state.filterSlice.currentPage);
     const dispatch = useDispatch();
     const changePage = (page) => dispatch(onChangePage(page));
 
