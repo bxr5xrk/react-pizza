@@ -17,45 +17,53 @@ const Pagination = ({ category, limit }) => {
 
     const pages = Math.ceil(totalPages / limit);
 
-    const currentPage = useSelector((state) => state.filterSlice.currentPage);
+    const { currentPage, searchValue } = useSelector(
+        (state) => state.filterSlice
+    );
     const dispatch = useDispatch();
     const changePage = (page) => dispatch(onChangePage(page));
 
     return (
-        <div className={st.pagination}>
-            {currentPage > 1 ? (
-                <span
-                    className={st.page}
-                    onClick={() => changePage(currentPage - 1)}
-                >
-                    {"<"}
-                </span>
-            ) : (
-                ""
-            )}
+        <div>
+            {!searchValue ? (
+                <div className={st.pagination}>
+                    {currentPage > 1 ? (
+                        <span
+                            className={st.page}
+                            onClick={() => changePage(currentPage - 1)}
+                        >
+                            {"<"}
+                        </span>
+                    ) : (
+                        ""
+                    )}
 
-            {pages > 1 &&
-                [...new Array(pages)].map((_, p) => (
-                    <span
-                        onClick={() => changePage(p + 1)}
-                        className={
-                            p + 1 === currentPage
-                                ? `${st.page} ${st.page__selected}`
-                                : st.page
-                        }
-                        key={p}
-                    >
-                        {p + 1}
-                    </span>
-                ))}
+                    {pages > 1 &&
+                        [...new Array(pages)].map((_, p) => (
+                            <span
+                                onClick={() => changePage(p + 1)}
+                                className={
+                                    p + 1 === currentPage
+                                        ? `${st.page} ${st.page__selected}`
+                                        : st.page
+                                }
+                                key={p}
+                            >
+                                {p + 1}
+                            </span>
+                        ))}
 
-            {currentPage < pages ? (
-                <span
-                    className={st.page}
-                    onClick={() => changePage(currentPage + 1)}
-                >
-                    {">"}
-                </span>
+                    {currentPage < pages ? (
+                        <span
+                            className={st.page}
+                            onClick={() => changePage(currentPage + 1)}
+                        >
+                            {">"}
+                        </span>
+                    ) : (
+                        ""
+                    )}
+                </div>
             ) : (
                 ""
             )}
