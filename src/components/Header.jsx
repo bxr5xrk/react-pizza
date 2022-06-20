@@ -1,11 +1,20 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { onChangePage, onChangeSearchValue } from "../store/slices/filterSlice";
 
 const Header = () => {
+    const dispatch = useDispatch();
+    
+    const clearSearchAndPage = () => {
+        dispatch(onChangeSearchValue(""));
+        dispatch(onChangePage(1));
+    };
+
     return (
         <div className="header">
             <div className="container">
-                <Link to="/">
+                <Link to="/" onClick={clearSearchAndPage}>
                     <div className="header__logo">
                         <img
                             width="38"
