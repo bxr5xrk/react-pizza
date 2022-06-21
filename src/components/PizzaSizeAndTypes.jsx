@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
-const PizzaSizeAndTypes = ({ sizes, pizzaTypes }) => {
-    const [sizeActive, setSizeActive] = useState(0);
-    const [typeActive, setTypeActive] = useState(0);
+const PizzaSizeAndTypes = ({
+    sizes,
+    pizzaTypes,
+    sizeActive,
+    setSizeActive,
+    typeActive,
+    setTypeActive,
+}) => {
     const pizzaEdges = ["Звичайний", "Сирний"];
 
     return (

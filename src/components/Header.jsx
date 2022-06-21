@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -17,6 +18,14 @@ const Header = () => {
         dispatch(setCategoryId(0));
         dispatch(setSortType({ name: "за популярністю", sortProp: "rating" }));
     };
+
+    const { totalPrice, pizzaItems } = useSelector((state) => state.cartSlice);
+
+    const totalPizzaCount = totalPrice
+        ? pizzaItems.reduce((sum, i) => {
+              return sum + i.count;
+          }, 0)
+        : 0;
 
     return (
         <div className="header">
@@ -39,7 +48,7 @@ const Header = () => {
                 <Link to="/cart">
                     <div className="header__cart">
                         <div className="button button--cart">
-                            <span>520 грн</span>
+                            <span>{totalPrice} грн</span>
                             <div className="button__delimiter"></div>
                             <svg
                                 width="18"
@@ -70,7 +79,7 @@ const Header = () => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            <span>2</span>
+                            <span>{totalPizzaCount}</span>
                         </div>
                     </div>
                 </Link>

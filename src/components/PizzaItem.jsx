@@ -1,8 +1,31 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addPizzaToCart } from "../store/slices/cartSlice";
 import PizzaSizeAndTypes from "./PizzaSizeAndTypes";
 
-const Pizza = ({ title, price, image, sizes, pizzaType }) => {
-    const [counter, setCounter] = useState(0);
+const Pizza = ({ id, title, price, image, sizes, pizzaType }) => {
+    const dispatch = useDispatch();
+    const [sizeActive, setSizeActive] = useState(0);
+    const [typeActive, setTypeActive] = useState(0);
+
+    const cartItem = useSelector((state) =>
+        state.cartSlice.pizzaItems.find((obj) => id === obj.id)
+    );
+
+    const countItems = cartItem ? cartItem.count : 0;
+
+    const onClickAddPizza = () => {
+        const pizzaItem = {
+            id,
+            title,
+            price,
+            image,
+            size: sizeActive,
+            type: typeActive,
+        };
+        dispatch(addPizzaToCart(pizzaItem));
+    };
 
     return (
         <div className="pizza-block__wrapper">
@@ -10,13 +33,20 @@ const Pizza = ({ title, price, image, sizes, pizzaType }) => {
                 <img className="pizza-block__image" src={image} alt="Pizza" />
                 <h4 className="pizza-block__title">{title}</h4>
 
-                <PizzaSizeAndTypes sizes={sizes} pizzaTypes={pizzaType} />
+                <PizzaSizeAndTypes
+                    sizes={sizes}
+                    pizzaTypes={pizzaType}
+                    sizeActive={sizeActive}
+                    setSizeActive={setSizeActive}
+                    typeActive={typeActive}
+                    setTypeActive={setTypeActive}
+                />
 
                 <div className="pizza-block__bottom">
                     <div className="pizza-block__price">{price} грн</div>
                     <div
                         className="button button--outline button--add"
-                        onClick={() => setCounter(counter + 1)}
+                        onClick={onClickAddPizza}
                     >
                         <svg
                             width="12"
@@ -31,7 +61,7 @@ const Pizza = ({ title, price, image, sizes, pizzaType }) => {
                             />
                         </svg>
                         <span>Добавити</span>
-                        <i>{counter}</i>
+                        {countItems > 0 && <i>{countItems}</i>}
                     </div>
                 </div>
             </div>
