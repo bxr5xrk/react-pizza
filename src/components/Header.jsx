@@ -1,20 +1,31 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { onChangePage, onChangeSearchValue } from "../store/slices/filterSlice";
+import {
+    onChangePage,
+    onChangeSearchValue,
+    setCategoryId,
+    setSortType,
+} from "../store/slices/filterSlice";
 
 const Header = () => {
     const dispatch = useDispatch();
-    
-    const clearSearchAndPage = () => {
-        dispatch(onChangeSearchValue(""));
-        dispatch(onChangePage(1));
+
+    const resetValues = () => {
+        onChangeSearchValue("");
+        onChangePage(1);
+        setCategoryId(0);
+        setSortType({ name: "за популярністю", sortProp: "rating" });
+    };
+
+    const clearAll = () => {
+        dispatch(resetValues);
     };
 
     return (
         <div className="header">
             <div className="container">
-                <Link to="/" onClick={clearSearchAndPage}>
+                <Link to="/" onClick={clearAll}>
                     <div className="header__logo">
                         <img
                             width="38"

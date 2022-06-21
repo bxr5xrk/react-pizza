@@ -1,16 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
-import qs from "qs";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { sortTypes } from "../components/Sort";
-import { setSearch } from "../store/slices/filterSlice";
+import { fetchPosts, ReadAndWriteQueryString } from "../API/PizzaService";
 
 const PizzaList = ({ title }) => {
     // pizza array
@@ -41,65 +36,27 @@ const PizzaList = ({ title }) => {
     // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
 
-    const dispatch = useDispatch();
     const [isSearch, setIsSearch] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
 
-    useEffect(() => {
-        if (window.location.search) {
-            const params = qs.parse(window.location.search.slice(1));
-
-            const sortType = sortTypes.find(
-                (i) => i.sortProp === params.sortProp
-            );
-
-            dispatch(setSearch({ ...params, sortType }));
-            setIsSearch(true);
-        }
-    }, []);
-
-    const fetchPosts = () => {
-        setIsLoading(true);
-
-        const sort = sortType.sortProp.replace("-", "");
-        const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
-        const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
-        const searchPizza = searchValue ? "" : pageLimit;
-
-        axios
-            .get(
-                `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
-            )
-            .then((res) => {
-                setIsLoading(false);
-                setPizza(res.data);
-            });
-    };
+    ReadAndWriteQueryString(setIsSearch, categoryId, currentPage, sortType);
 
     // get pizza from server
     useEffect(() => {
         if (!isSearch) {
-            fetchPosts();
+            fetchPosts(
+                setIsLoading,
+                sortType,
+                currentPage,
+                limitItemsOnPage,
+                searchValue,
+                category,
+                setPizza
+            );
         }
 
         setIsSearch(false);
         window.scrollTo(0, 0);
-    }, [category, sortType.sortProp, currentPage, searchValue]);
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (isMounted) {
-            const queryString = qs.stringify({
-                categoryId,
-                sortProp: sortType.sortProp,
-                currentPage,
-            });
-            navigate(`?${queryString}`);
-            // setIsMounted(false)
-        }
-        setIsMounted(true);
-    }, [categoryId, sortType.sortProp, currentPage]);
+    }, [category, sortType, currentPage, searchValue]);
 
     // block if nothing found
     const nothingFound = (
