@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { sortTypes } from "../components/Sort";
 import { setSearch } from "../store/slices/filterSlice";
 
-export const fetchPosts = (
+export const fetchPizza = (
     setIsLoading,
     sortType,
     currentPage,
@@ -52,7 +52,7 @@ export const ReadAndWriteQueryString = (
             );
 
             dispatch(setSearch({ ...params, sortType }));
-            setIsSearch(false);
+            setIsSearch(true);
         }
     }, []);
 

@@ -5,7 +5,7 @@ import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
-import { fetchPosts, ReadAndWriteQueryString } from "../API/PizzaService";
+import { fetchPizza, ReadAndWriteQueryString } from "../API/PizzaService";
 
 const PizzaList = ({ title }) => {
     // pizza array
@@ -38,12 +38,10 @@ const PizzaList = ({ title }) => {
 
     const [isSearch, setIsSearch] = useState(false);
 
-    ReadAndWriteQueryString(setIsSearch, categoryId, currentPage, sortType);
-
     // get pizza from server
     useEffect(() => {
         if (!isSearch) {
-            fetchPosts(
+            fetchPizza(
                 setIsLoading,
                 sortType,
                 currentPage,
@@ -54,9 +52,11 @@ const PizzaList = ({ title }) => {
             );
         }
 
-        // setIsSearch(true);
+        setIsSearch(false);
         window.scrollTo(0, 0);
     }, [category, sortType, currentPage, searchValue]);
+
+    ReadAndWriteQueryString(setIsSearch, categoryId, currentPage, sortType);
 
     // block if nothing found
     const nothingFound = (
