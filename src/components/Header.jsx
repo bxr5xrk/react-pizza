@@ -21,11 +21,7 @@ const Header = () => {
 
     const { totalPrice, pizzaItems } = useSelector((state) => state.cartSlice);
 
-    const totalPizzaCount = totalPrice
-        ? pizzaItems.reduce((sum, i) => {
-              return sum + i.count;
-          }, 0)
-        : 0;
+    const totalPizzaCount = pizzaItems.reduce((sum, i) => sum + i.count, 0);
 
     return (
         <div className="header">
