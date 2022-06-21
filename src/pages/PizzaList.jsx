@@ -54,7 +54,7 @@ const PizzaList = ({ title }) => {
             );
         }
 
-        setIsSearch(false);
+        // setIsSearch(true);
         window.scrollTo(0, 0);
     }, [category, sortType, currentPage, searchValue]);
 

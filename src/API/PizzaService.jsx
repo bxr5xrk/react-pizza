@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import QueryString from "qs";
 import { useEffect, useState } from "react";
@@ -51,20 +52,20 @@ export const ReadAndWriteQueryString = (
             );
 
             dispatch(setSearch({ ...params, sortType }));
-            setIsSearch(true);
+            setIsSearch(false);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // make query string if vlues changed
     useEffect(() => {
         if (isMounted) {
             const queryString = QueryString.stringify({
+                currentPage,
                 categoryId,
                 sortProp: sortType.sortProp,
-                currentPage,
             });
             navigate(`?${queryString}`);
         }
         setIsMounted(true);
-    }, [categoryId, currentPage, sortType, isMounted, navigate]);
+    }, [categoryId, currentPage, sortType]);
 };
