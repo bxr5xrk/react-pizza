@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -5,6 +6,11 @@ import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { sortTypes } from "../components/Sort";
+import { setSearch } from "../store/slices/filterSlice";
 
 const PizzaList = ({ title }) => {
     // pizza array
@@ -35,8 +41,24 @@ const PizzaList = ({ title }) => {
     // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
 
-    // get pizza from server
+    const dispatch = useDispatch();
+    const [isSearch, setIsSearch] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+
     useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.slice(1));
+
+            const sortType = sortTypes.find(
+                (i) => i.sortProp === params.sortProp
+            );
+
+            dispatch(setSearch({ ...params, sortType }));
+            setIsSearch(true);
+        }
+    }, []);
+
+    const fetchPosts = () => {
         setIsLoading(true);
 
         const sort = sortType.sortProp.replace("-", "");
@@ -52,9 +74,32 @@ const PizzaList = ({ title }) => {
                 setIsLoading(false);
                 setPizza(res.data);
             });
+    };
 
+    // get pizza from server
+    useEffect(() => {
+        if (!isSearch) {
+            fetchPosts();
+        }
+
+        setIsSearch(false);
         window.scrollTo(0, 0);
     }, [category, sortType.sortProp, currentPage, searchValue]);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isMounted) {
+            const queryString = qs.stringify({
+                categoryId,
+                sortProp: sortType.sortProp,
+                currentPage,
+            });
+            navigate(`?${queryString}`);
+            // setIsMounted(false)
+        }
+        setIsMounted(true);
+    }, [categoryId, sortType.sortProp, currentPage]);
 
     // block if nothing found
     const nothingFound = (
