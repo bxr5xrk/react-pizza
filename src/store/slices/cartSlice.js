@@ -5,6 +5,13 @@ const initialState = {
     pizzaItems: [],
 };
 
+const calculateTotalPrice = (state) => {
+    state.totalPrice = state.pizzaItems.reduce(
+        (sum, i) => sum + i.price * i.count,
+        0
+    );
+};
+
 const cartSlice = createSlice({
     name: "cart",
     initialState,
@@ -18,10 +25,7 @@ const cartSlice = createSlice({
                 ? findPizza.count++
                 : state.pizzaItems.push({ ...action.payload, count: 1 });
 
-            state.totalPrice = state.pizzaItems.reduce(
-                (sum, i) => sum + i.price * i.count,
-                0
-            );
+            calculateTotalPrice(state);
         },
         pizzaitemDecrement(state, action) {
             const findPizza = state.pizzaItems.find(
@@ -36,15 +40,14 @@ const cartSlice = createSlice({
                 );
             }
 
-            state.totalPrice = state.pizzaItems.reduce(
-                (sum, i) => sum + i.price * i.count,
-                0
-            );
+            calculateTotalPrice(state);
         },
         removePizzaFromCart(state, action) {
             state.pizzaItems = state.pizzaItems.filter(
                 (pizza) => pizza.id !== action.payload
             );
+
+            calculateTotalPrice(state);
         },
         clearPizzaCart(state) {
             state.pizzaItems = [];
