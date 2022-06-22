@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { sortTypes } from "../components/Sort";
 import { setSearch } from "../store/slices/filterSlice";
 
-export const fetchPizza = (
+export const fetchPizza = async (
     setIsLoading,
     sortType,
     currentPage,
@@ -23,14 +23,16 @@ export const fetchPizza = (
     const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
     const searchPizza = searchValue ? "" : pageLimit;
 
-    axios
-        .get(
+    try {
+        const res = await axios.get(
             `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
-        )
-        .then((res) => {
-            setIsLoading(false);
-            setPizza(res.data);
-        });
+        );
+        setPizza(res.data);
+    } catch (err) {
+        console.log(err);
+    } finally {
+        setIsLoading(false);
+    }
 };
 
 export const ReadAndWriteQueryString = (
