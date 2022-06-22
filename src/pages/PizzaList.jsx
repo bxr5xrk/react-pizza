@@ -5,11 +5,14 @@ import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
-import { fetchPizza, ReadAndWriteQueryString } from "../API/PizzaService";
+import { ReadAndWriteQueryString } from "../API/PizzaService";
+import { useDispatch } from "react-redux";
+import { fetchPizzaItems } from "../store/slices/pizzaSlice";
 
 const PizzaList = ({ title }) => {
     // pizza array
-    const [pizza, setPizza] = useState([]);
+    // const [pizza, setPizza] = useState([]);
+    const { pizzaItems, status } = useSelector((state) => state.pizzaSlice);
 
     // global state for sort and categories
     const { categoryId, sortType, searchValue, currentPage } = useSelector(
@@ -17,13 +20,13 @@ const PizzaList = ({ title }) => {
     );
 
     // for skeleton
-    const [isLoading, setIsLoading] = useState(true);
+    // const [isLoading, setIsLoading] = useState(true);
 
     // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
 
     // show only those pizzas, that match search
-    const filteredPizza = pizza
+    const filteredPizza = pizzaItems
         .filter((item) =>
             searchValue
                 ? item.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -38,19 +41,39 @@ const PizzaList = ({ title }) => {
 
     const [isSearch, setIsSearch] = useState(false);
 
+    const dispatch = useDispatch();
+
+    const FetchPizza = async () => {
+        if (!isSearch) {
+            if (status !== "error") {
+                // setIsLoading(true);
+
+                const sort = sortType.sortProp.replace("-", "");
+                const sortOrder = sortType.sortProp.includes("-")
+                    ? "asc"
+                    : "desc";
+                const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
+                const searchPizza = searchValue ? "" : pageLimit;
+
+                // try {
+                // const { data } = await axios.get(
+                //     `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
+                // );
+                dispatch(
+                    fetchPizzaItems({ category, sort, sortOrder, searchPizza })
+                );
+                // } catch (err) {
+                //     console.log(err);
+                // } finally {
+                //     setIsLoading(false);
+                // }
+            }
+        }
+    };
+
     // get pizza from server
     useEffect(() => {
-        if (!isSearch) {
-            fetchPizza(
-                setIsLoading,
-                sortType,
-                currentPage,
-                limitItemsOnPage,
-                searchValue,
-                category,
-                setPizza
-            );
-        }
+        FetchPizza();
 
         setIsSearch(false);
         window.scrollTo(0, 0);
@@ -72,15 +95,20 @@ const PizzaList = ({ title }) => {
 
             <h2 className="content__title">{title}</h2>
 
-            {isLoading ? (
-                <div className="content__items">{skeleton}</div>
-            ) : !filteredPizza.length ? (
-                nothingFound
+            {status === "error" ? (
+                <div>ERROR</div>
             ) : (
-                <div className="content__items">{filteredPizza}</div>
+                <div>
+                    {status === "loading" ? (
+                        <div className="content__items">{skeleton}</div>
+                    ) : !filteredPizza.length ? (
+                        nothingFound
+                    ) : (
+                        <div className="content__items">{filteredPizza}</div>
+                    )}
+                    <Pagination category={category} limit={limitItemsOnPage} />
+                </div>
             )}
-
-            <Pagination category={category} limit={limitItemsOnPage} />
         </div>
     );
 };

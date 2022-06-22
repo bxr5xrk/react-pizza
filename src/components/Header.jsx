@@ -19,9 +19,11 @@ const Header = () => {
         dispatch(setSortType({ name: "за популярністю", sortProp: "rating" }));
     };
 
-    const { totalPrice, pizzaItems } = useSelector((state) => state.cartSlice);
+    const { totalPrice, pizzaItemsCart } = useSelector(
+        (state) => state.cartSlice
+    );
 
-    const totalPizzaCount = pizzaItems.reduce((sum, i) => sum + i.count, 0);
+    const totalPizzaCount = pizzaItemsCart.reduce((sum, i) => sum + i.count, 0);
 
     return (
         <div className="header">

@@ -10,7 +10,7 @@ const Pizza = ({ id, title, price, image, sizes, pizzaType }) => {
     const [typeActive, setTypeActive] = useState(0);
 
     const cartItem = useSelector((state) =>
-        state.cartSlice.pizzaItems.find((obj) => id === obj.id)
+        state.cartSlice.pizzaItemsCart.find((obj) => id === obj.id)
     );
 
     const countItems = cartItem ? cartItem.count : 0;

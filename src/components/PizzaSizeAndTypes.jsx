@@ -9,8 +9,6 @@ const PizzaSizeAndTypes = ({
     setTypeActive,
     pizzaEdges,
 }) => {
-    // const pizzaEdges = ["Звичайний", "Сирний"];
-
     return (
         <div className="pizza-block__selector">
             <ul>
