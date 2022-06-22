@@ -35,7 +35,7 @@ const Header = () => {
                         />
                         <div>
                             <h1>React Pizza</h1>
-                            <p>Сама смачна піца</p>
+                            <p>Найсмачніша піца</p>
                         </div>
                     </div>
                 </Link>

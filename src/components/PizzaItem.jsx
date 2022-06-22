@@ -15,14 +15,16 @@ const Pizza = ({ id, title, price, image, sizes, pizzaType }) => {
 
     const countItems = cartItem ? cartItem.count : 0;
 
+    const pizzaEdges = ["Звичайний", "Сирний"];
+
     const onClickAddPizza = () => {
         const pizzaItem = {
             id,
             title,
             price,
             image,
-            size: sizeActive,
-            type: typeActive,
+            size: sizes[sizeActive],
+            pizzaType: pizzaEdges[typeActive],
         };
         dispatch(addPizzaToCart(pizzaItem));
     };
@@ -40,6 +42,7 @@ const Pizza = ({ id, title, price, image, sizes, pizzaType }) => {
                     setSizeActive={setSizeActive}
                     typeActive={typeActive}
                     setTypeActive={setTypeActive}
+                    pizzaEdges={pizzaEdges}
                 />
 
                 <div className="pizza-block__bottom">

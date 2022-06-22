@@ -7,8 +7,9 @@ const PizzaSizeAndTypes = ({
     setSizeActive,
     typeActive,
     setTypeActive,
+    pizzaEdges,
 }) => {
-    const pizzaEdges = ["Звичайний", "Сирний"];
+    // const pizzaEdges = ["Звичайний", "Сирний"];
 
     return (
         <div className="pizza-block__selector">

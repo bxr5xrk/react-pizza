@@ -6,7 +6,7 @@ import {
     removePizzaFromCart,
 } from "../store/slices/cartSlice";
 
-const CartItem = ({ id, title, image, price, count }) => {
+const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
     const dispatch = useDispatch();
 
     const onClickIncrement = () => dispatch(addPizzaToCart({ id }));
@@ -20,7 +20,7 @@ const CartItem = ({ id, title, image, price, count }) => {
             </div>
             <div className="cart__item-info">
                 <h3>{title}</h3>
-                <p>тонкое тесто, 26 см.</p>
+                <p>{pizzaType}, {size} см.</p>
             </div>
             <div className="cart__item-count">
                 <div
