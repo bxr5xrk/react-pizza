@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
@@ -39,35 +39,18 @@ const PizzaList = ({ title }) => {
     // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
 
-    const [isSearch, setIsSearch] = useState(false);
-
     const dispatch = useDispatch();
 
     const FetchPizza = async () => {
-        if (!isSearch) {
-            if (status !== "error") {
-                // setIsLoading(true);
+        if (status !== "error") {
+            const sort = sortType.sortProp.replace("-", "");
+            const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
+            const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
+            const searchPizza = searchValue ? "" : pageLimit;
 
-                const sort = sortType.sortProp.replace("-", "");
-                const sortOrder = sortType.sortProp.includes("-")
-                    ? "asc"
-                    : "desc";
-                const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
-                const searchPizza = searchValue ? "" : pageLimit;
-
-                // try {
-                // const { data } = await axios.get(
-                //     `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
-                // );
-                dispatch(
-                    fetchPizzaItems({ category, sort, sortOrder, searchPizza })
-                );
-                // } catch (err) {
-                //     console.log(err);
-                // } finally {
-                //     setIsLoading(false);
-                // }
-            }
+            dispatch(
+                fetchPizzaItems({ category, sort, sortOrder, searchPizza })
+            );
         }
     };
 
@@ -75,39 +58,46 @@ const PizzaList = ({ title }) => {
     useEffect(() => {
         FetchPizza();
 
-        setIsSearch(false);
         window.scrollTo(0, 0);
     }, [category, sortType, currentPage, searchValue]);
 
-    ReadAndWriteQueryString(setIsSearch, categoryId, currentPage, sortType);
+    ReadAndWriteQueryString(categoryId, currentPage, sortType);
 
     // block if nothing found
-    const nothingFound = (
+    const nothingFound = (titleText, bottomText) => (
         <div className="not-found">
-            <h1 className="not-found__title">Нічого не знайдено :(</h1>
-            <span className="not-found__bottom-text">Спробуйте ще раз</span>
+            <h1 className="not-found__title">{titleText}</h1>
+            <span className="not-found__bottom-text">{bottomText}</span>
         </div>
     );
 
     return (
         <div className="container">
-            <PizzaFilter />
-
-            <h2 className="content__title">{title}</h2>
-
             {status === "error" ? (
-                <div>ERROR</div>
+                <>
+                    {nothingFound(
+                        "Наразі у нас технічні проблеми",
+                        "Спобуйте пізніше"
+                    )}
+                </>
             ) : (
-                <div>
+                <>
+                    <PizzaFilter />
+
+                    <h2 className="content__title">{title}</h2>
+
                     {status === "loading" ? (
                         <div className="content__items">{skeleton}</div>
                     ) : !filteredPizza.length ? (
-                        nothingFound
+                        nothingFound(
+                            "Нічого не знайдено :(",
+                            "Спробуйте ще раз"
+                        )
                     ) : (
                         <div className="content__items">{filteredPizza}</div>
                     )}
                     <Pagination category={category} limit={limitItemsOnPage} />
-                </div>
+                </>
             )}
         </div>
     );
