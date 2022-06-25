@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setSortType } from "../store/slices/filterSlice";
+import { selectFilter, setSortType } from "../store/slices/filterSlice";
 
 export const sortTypes = [
     { name: "за популярністю", sortProp: "rating" },
@@ -16,7 +16,7 @@ const Sort = () => {
     const sortRef = useRef();
 
     const dispatch = useDispatch();
-    const sort = useSelector((state) => state.filterSlice.sortType);
+    const { sortType } = useSelector(selectFilter);
 
     const selectAndHide = (obj) => {
         setOpenPopUp(false);
@@ -32,7 +32,7 @@ const Sort = () => {
     useEffect(() => {
         document.body.addEventListener("click", hidePopUp);
 
-        return () => document.body.removeEventListener('click', hidePopUp)
+        return () => document.body.removeEventListener("click", hidePopUp);
     }, []);
 
     return (
@@ -52,7 +52,7 @@ const Sort = () => {
                 </svg>
                 <b>Сортувати:</b>
                 <span onClick={() => setOpenPopUp(!openPopUp)}>
-                    {sort.name}
+                    {sortType.name}
                 </span>
             </div>
             {openPopUp && (
@@ -63,7 +63,7 @@ const Sort = () => {
                                 key={i}
                                 onClick={() => selectAndHide(obj)}
                                 className={
-                                    sort.sortProp === obj.sortProp
+                                    sortType.sortProp === obj.sortProp
                                         ? "active"
                                         : ""
                                 }

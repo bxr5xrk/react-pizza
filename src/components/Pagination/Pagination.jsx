@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import st from "./Pagination.module.scss";
-import { onChangePage } from "../../store/slices/filterSlice";
+import { onChangePage, selectFilter } from "../../store/slices/filterSlice";
 
 const Pagination = ({ category, limit }) => {
     const [totalPages, setTotalPages] = useState();
@@ -17,9 +17,7 @@ const Pagination = ({ category, limit }) => {
 
     const pages = Math.ceil(totalPages / limit);
 
-    const { currentPage, searchValue } = useSelector(
-        (state) => state.filterSlice
-    );
+    const { currentPage, searchValue } = useSelector(selectFilter);
     const dispatch = useDispatch();
     const changePage = (page) => dispatch(onChangePage(page));
 

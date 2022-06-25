@@ -1,26 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
 import { ReadAndWriteQueryString } from "../API/PizzaService";
-import { useDispatch } from "react-redux";
 import { fetchPizzaItems } from "../store/slices/pizzaSlice";
+import { selectFilter } from "../store/slices/filterSlice";
 
 const PizzaList = ({ title }) => {
-    // pizza array
-    // const [pizza, setPizza] = useState([]);
+    // pizza items and request status
     const { pizzaItems, status } = useSelector((state) => state.pizzaSlice);
 
     // global state for sort and categories
-    const { categoryId, sortType, searchValue, currentPage } = useSelector(
-        (state) => state.filterSlice
-    );
-
-    // for skeleton
-    // const [isLoading, setIsLoading] = useState(true);
+    const { categoryId, sortType, searchValue, currentPage } =
+        useSelector(selectFilter);
 
     // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
@@ -41,8 +36,9 @@ const PizzaList = ({ title }) => {
 
     const dispatch = useDispatch();
 
-    const FetchPizza = async () => {
-        if (status !== "error") {
+    // get pizza from server
+    const FetchPizza = () => {
+        if (status !== "failed") {
             const sort = sortType.sortProp.replace("-", "");
             const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
             const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
@@ -54,13 +50,13 @@ const PizzaList = ({ title }) => {
         }
     };
 
-    // get pizza from server
     useEffect(() => {
         FetchPizza();
 
         window.scrollTo(0, 0);
     }, [category, sortType, currentPage, searchValue]);
 
+    // for reading search query
     ReadAndWriteQueryString(categoryId, currentPage, sortType);
 
     // block if nothing found
@@ -73,7 +69,7 @@ const PizzaList = ({ title }) => {
 
     return (
         <div className="container">
-            {status === "error" ? (
+            {status === "failed" ? (
                 <>
                     {nothingFound(
                         "Наразі у нас технічні проблеми",
@@ -96,6 +92,7 @@ const PizzaList = ({ title }) => {
                     ) : (
                         <div className="content__items">{filteredPizza}</div>
                     )}
+
                     <Pagination category={category} limit={limitItemsOnPage} />
                 </>
             )}

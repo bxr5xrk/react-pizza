@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectCart } from "../store/slices/cartSlice";
 import {
     onChangePage,
     onChangeSearchValue,
@@ -19,9 +20,7 @@ const Header = () => {
         dispatch(setSortType({ name: "за популярністю", sortProp: "rating" }));
     };
 
-    const { totalPrice, pizzaItemsCart } = useSelector(
-        (state) => state.cartSlice
-    );
+    const { totalPrice, pizzaItemsCart } = useSelector(selectCart);
 
     const totalPizzaCount = pizzaItemsCart.reduce((sum, i) => sum + i.count, 0);
 

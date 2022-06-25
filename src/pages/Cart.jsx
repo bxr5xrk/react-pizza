@@ -4,12 +4,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartEmpty from "../components/CartEmpty";
 import CartItem from "../components/CartItem";
-import { clearPizzaCart } from "../store/slices/cartSlice";
+import { clearPizzaCart, selectCart } from "../store/slices/cartSlice";
 
 const Cart = () => {
-    const { totalPrice, pizzaItemsCart } = useSelector(
-        (state) => state.cartSlice
-    );
+    const { totalPrice, pizzaItemsCart } = useSelector(selectCart);
 
     const totalPizzaCount = pizzaItemsCart.reduce((sum, i) => sum + i.count, 0);
 
