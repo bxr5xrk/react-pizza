@@ -378,3 +378,16 @@ body {
     opacity: 0.7;
   }
 }
+
+.pizza-page {
+  display: flex;
+  justify-content:left;
+
+  img {
+    width: 500px;
+  }
+
+  &__info {
+    margin-left: 50px;
+  }
+}

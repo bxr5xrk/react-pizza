@@ -26,11 +26,18 @@ const PizzaBlock = () => {
     return (
         <div className="container">
             {pizza ? (
-                <>
-                    <h1>{pizza.title}</h1>
-                    <img src={pizza.image} alt="pizza" />
-                    <p>{pizza.price} грн</p>
-                </>
+                <div className="pizza-page">
+                    <img
+                        className="pizza-block__image"
+                        src={pizza.image}
+                        alt="pizza"
+                    />
+                    <div className="pizza-page__info">
+                        <h1>{pizza.title}</h1>
+
+                        <p className="pizza-block__price">{pizza.price} грн</p>
+                    </div>
+                </div>
             ) : (
                 <p>Завантаження...</p>
             )}

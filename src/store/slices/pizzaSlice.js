@@ -5,11 +5,19 @@ import axios from "axios";
 const initialState = {
     pizzaItems: [],
     status: "",
+    limitItemsOnPage: 4,
+    pizzaEdges: ["Звичайний", "Сирний"],
 };
 
 export const fetchPizzaItems = createAsyncThunk(
     "pizza/fetchPizzaStatus",
-    async ({ category, sort, sortOrder, searchPizza }) => {
+
+    async ({ sortType, currentPage, searchValue, category }) => {
+        const sort = sortType.sortProp.replace("-", "");
+        const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
+        const pageLimit = `&p=${currentPage}&l=${initialState.limitItemsOnPage}`;
+        const searchPizza = searchValue ? "" : pageLimit;
+
         const { data } = await axios.get(
             `https://62a1db14cd2e8da9b0fca398.mockapi.io/pizza?${category}${searchPizza}&sortBy=${sort}&order=${sortOrder}`
         );
@@ -40,6 +48,8 @@ const pizzaSlice = createSlice({
         },
     },
 });
+
+export const selectPizza = (state) => state.pizzaSlice;
 
 export const { setPizzaItems } = pizzaSlice.actions;
 export default pizzaSlice.reducer;
