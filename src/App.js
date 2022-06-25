@@ -4,6 +4,7 @@ import PizzaList from "./pages/PizzaList";
 import Cart from "./pages/Cart";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import "./scss/app.scss";
+import PizzaBlock from "./pages/PizzaBlock";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<PizzaList title="Pizza" />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/pizza/:id" element={<PizzaBlock />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </div>
