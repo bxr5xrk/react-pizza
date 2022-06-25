@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { selectCart } from "../store/slices/cartSlice";
 import {
@@ -24,6 +25,8 @@ const Header = () => {
 
     const totalPizzaCount = pizzaItemsCart.reduce((sum, i) => sum + i.count, 0);
 
+    const {pathname} = useLocation()
+
     return (
         <div className="header">
             <div className="container">
@@ -41,8 +44,7 @@ const Header = () => {
                     </div>
                 </Link>
 
-                {/* створити з цього новий компонент PizzaBasket */}
-                <Link to="/cart">
+               {pathname !== '/cart' && <Link to="/cart">
                     <div className="header__cart">
                         <div className="button button--cart">
                             <span>{totalPrice} грн</span>
@@ -79,7 +81,7 @@ const Header = () => {
                             <span>{totalPizzaCount}</span>
                         </div>
                     </div>
-                </Link>
+                </Link>}
             </div>
         </div>
     );
