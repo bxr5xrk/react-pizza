@@ -29,8 +29,6 @@ const PizzaList = ({ title }) => {
         )
         .map((item) => <Pizza key={item.id} {...item} />);
 
-    const limitItemsOnPage = 4;
-
     // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
 
@@ -39,13 +37,13 @@ const PizzaList = ({ title }) => {
     // get pizza from server
     const FetchPizza = () => {
         if (status !== "failed") {
-            const sort = sortType.sortProp.replace("-", "");
-            const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
-            const pageLimit = `&p=${currentPage}&l=${limitItemsOnPage}`;
-            const searchPizza = searchValue ? "" : pageLimit;
-
             dispatch(
-                fetchPizzaItems({ category, sort, sortOrder, searchPizza })
+                fetchPizzaItems({
+                    sortType,
+                    currentPage,
+                    searchValue,
+                    category,
+                })
             );
         }
     };
@@ -93,7 +91,7 @@ const PizzaList = ({ title }) => {
                         <div className="content__items">{filteredPizza}</div>
                     )}
 
-                    <Pagination category={category} limit={limitItemsOnPage} />
+                    <Pagination category={category} />
                 </>
             )}
         </div>

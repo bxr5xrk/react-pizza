@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addPizzaToCart } from "../store/slices/cartSlice";
+import { selectPizza } from "../store/slices/pizzaSlice";
 import PizzaSizeAndTypes from "./PizzaSizeAndTypes";
 
 const Pizza = ({ id, title, price, image, sizes, pizzaType }) => {
@@ -16,7 +17,7 @@ const Pizza = ({ id, title, price, image, sizes, pizzaType }) => {
 
     const countItems = cartItem ? cartItem.count : 0;
 
-    const pizzaEdges = ["Звичайний", "Сирний"];
+    const { pizzaEdges } = useSelector(selectPizza);
 
     const onClickAddPizza = () => {
         const pizzaItem = {
