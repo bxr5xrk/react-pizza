@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectPizza } from "../store/slices/pizzaSlice";
 
 const PizzaSizeAndTypes = ({
     sizes,
@@ -7,8 +9,9 @@ const PizzaSizeAndTypes = ({
     setSizeActive,
     typeActive,
     setTypeActive,
-    pizzaEdges,
 }) => {
+    const { pizzaEdges } = useSelector(selectPizza);
+
     return (
         <div className="pizza-block__selector">
             <ul>
