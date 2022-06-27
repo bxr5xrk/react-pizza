@@ -7,6 +7,7 @@ const initialState = {
     status: "",
     limitItemsOnPage: 4,
     pizzaEdges: ["Звичайний", "Сирний"],
+    isPizzaPage: false,
 };
 
 export const fetchPizzaItems = createAsyncThunk(
@@ -32,6 +33,9 @@ const pizzaSlice = createSlice({
         setPizzaItems(state, action) {
             state.pizzaItems = action.payload;
         },
+        setIsPizzaPage(state, action) {
+            state.isPizzaPage = action.payload;
+        },
     },
     extraReducers: {
         [fetchPizzaItems.pending]: (state) => {
@@ -51,5 +55,5 @@ const pizzaSlice = createSlice({
 
 export const selectPizza = (state) => state.pizzaSlice;
 
-export const { setPizzaItems } = pizzaSlice.actions;
+export const { setPizzaItems, setIsPizzaPage } = pizzaSlice.actions;
 export default pizzaSlice.reducer;

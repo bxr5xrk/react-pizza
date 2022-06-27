@@ -21,13 +21,6 @@ const PizzaList = ({ title }) => {
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
 
     // show only those pizzas, that match search
-    const filteredPizza = pizzaItems
-        .filter((item) =>
-            searchValue
-                ? item.title.toLowerCase().includes(searchValue.toLowerCase())
-                : item
-        )
-        .map((item) => <Pizza key={item.id} {...item} />);
 
     // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
@@ -35,7 +28,7 @@ const PizzaList = ({ title }) => {
     const dispatch = useDispatch();
 
     // get pizza from server
-    const FetchPizza = () => {
+    useEffect(() => {
         if (status !== "failed") {
             dispatch(
                 fetchPizzaItems({
@@ -46,16 +39,20 @@ const PizzaList = ({ title }) => {
                 })
             );
         }
-    };
-
-    useEffect(() => {
-        FetchPizza();
 
         window.scrollTo(0, 0);
     }, [category, sortType, currentPage, searchValue]);
 
     // for reading search query
     ReadAndWriteQueryString(categoryId, currentPage, sortType);
+
+    const filteredPizza = pizzaItems
+        .filter((item) =>
+            searchValue
+                ? item.title.toLowerCase().includes(searchValue.toLowerCase())
+                : item
+        )
+        .map((item) => <Pizza key={item.id} {...item} />);
 
     // block if nothing found
     const nothingFound = (titleText, bottomText) => (
