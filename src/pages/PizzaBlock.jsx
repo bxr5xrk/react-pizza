@@ -15,7 +15,6 @@ import {
 const PizzaBlock = () => {
     // get pizza id from search query
     const { id } = useParams();
-    // const [test, setTest] = useState(false)
 
     const [pizza, setPizza] = useState();
 
@@ -45,9 +44,9 @@ const PizzaBlock = () => {
     }, []);
 
     // const { isPizzaPage } = useSelector(selectPizza);
-    // const onClickBack = () => {
-    //     dispatch(setIsPizzaPage(isPizzaPage ? false : false));
-    // };
+    const onClickBack = () => {
+        dispatch(setIsPizzaPage(false));
+    };
 
     return (
         <div className="container">
@@ -66,7 +65,7 @@ const PizzaBlock = () => {
                         </div>
 
                         <div
-                            // onClick={onClickBack}
+                            onClick={onClickBack}
                             className="cart__bottom-buttons"
                         >
                             <Link

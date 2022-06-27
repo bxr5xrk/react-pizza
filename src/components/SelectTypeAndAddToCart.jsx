@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { addPizzaToCart } from "../store/slices/cartSlice";
@@ -34,8 +33,6 @@ const SelectTypeAndAddToCart = ({ id }) => {
         };
         dispatch(addPizzaToCart(pizzaItem));
     };
-
-    console.log(isPizzaPage);
 
     return (
         <div>
