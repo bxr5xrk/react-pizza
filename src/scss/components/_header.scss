@@ -4,12 +4,16 @@
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
-  @media (max-width: 730px) {
+  @media (max-width: 440px) {
       padding: 8px 0;
-
+      
       .container {
         p {
           display: none;
+        }
+        h1 {
+          font-size: 20px;
+          width: 130px;
         }
   
         .categories {

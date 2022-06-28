@@ -16,8 +16,9 @@ body {
   max-width: 1400px;
 
   @media (max-width: 730px) {
-      margin: 5px auto;
-      width: calc(100vw - 15px);
+      margin: 0;
+      width: 100vw;
+      height: 100%;
       border-radius: none;
   }
 }
@@ -57,12 +58,19 @@ body {
 
     @media (max-width: 1300px) {
       flex-direction: column;
+      div {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
 
       .categories {
         display: flex;
+        justify-content: center;
         margin-top: 20px;
         width: 100%;
         overflow: scroll;
+
         ul {
           width: 785px;
         }
@@ -73,14 +81,6 @@ body {
           display: none;
         }
         padding-left: 20px;
-      }
-    }
-
-    @media (max-width: 720px) {
-      flex-direction: column;
-
-      .sort {
-        margin-top: 30px;
       }
     }
   }
