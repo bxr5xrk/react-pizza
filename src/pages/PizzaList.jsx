@@ -11,7 +11,9 @@ import { selectFilter } from "../store/slices/filterSlice";
 
 const PizzaList = ({ title }) => {
     // pizza items and request status
-    const { pizzaItems, status } = useSelector((state) => state.pizzaSlice);
+    const { pizzaItems, status } = useSelector(
+        (state) => state.pizzaSlice
+    );
 
     // global state for sort and categories
     const { categoryId, sortType, searchValue, currentPage } =
@@ -19,8 +21,6 @@ const PizzaList = ({ title }) => {
 
     // generate empty items for skeleton
     const skeleton = [...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />);
-
-    // show only those pizzas, that match search
 
     // for display category 'Всі'
     const category = categoryId > 0 ? `category=${categoryId}` : "";
@@ -41,11 +41,12 @@ const PizzaList = ({ title }) => {
         }
 
         window.scrollTo(0, 0);
-    }, [category, sortType, currentPage, searchValue]);
+    }, [categoryId, sortType, currentPage, searchValue]);
 
     // for reading search query
     ReadAndWriteQueryString(categoryId, currentPage, sortType);
 
+    // show only those pizzas, that match search
     const filteredPizza = pizzaItems
         .filter((item) =>
             searchValue

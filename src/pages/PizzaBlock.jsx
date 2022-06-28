@@ -43,7 +43,6 @@ const PizzaBlock = () => {
         }
     }, []);
 
-    // const { isPizzaPage } = useSelector(selectPizza);
     const onClickBack = () => {
         dispatch(setIsPizzaPage(false));
     };
@@ -87,7 +86,7 @@ const PizzaBlock = () => {
                                         strokeLinejoin="round"
                                     ></path>
                                 </svg>
-                                <span>Повернутися на головну</span>
+                                <span>Повернутися назад</span>
                             </Link>
                         </div>
                     </div>
