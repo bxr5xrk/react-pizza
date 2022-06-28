@@ -18,17 +18,23 @@ const SelectTypeAndAddToCart = ({ id }) => {
 
     const countItems = cartItem ? cartItem.count : 0;
 
-    const { title, price, image, sizes, pizzaType } = isPizzaPage
+    const { title, image, sizes, pizzaType } = isPizzaPage
         ? pizzaItems
         : pizzaItems.find((i) => i.id === id);
+
+    // if edges active
+    const totalPizzaPrice =
+        pizzaType[typeActive] === 1
+            ? sizes[sizeActive].price + 20
+            : sizes[sizeActive].price;
 
     const onClickAddPizza = () => {
         const pizzaItem = {
             id,
             title,
-            price,
+            price: totalPizzaPrice,
             image,
-            size: sizes[sizeActive],
+            size: sizes[sizeActive].size,
             pizzaType: pizzaEdges[typeActive],
         };
         dispatch(addPizzaToCart(pizzaItem));
@@ -46,7 +52,7 @@ const SelectTypeAndAddToCart = ({ id }) => {
             />
 
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">{price} грн</div>
+                <div className="pizza-block__price">{totalPizzaPrice} грн</div>
                 <div
                     className="button button--outline button--add"
                     onClick={onClickAddPizza}

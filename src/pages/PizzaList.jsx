@@ -11,9 +11,7 @@ import { selectFilter } from "../store/slices/filterSlice";
 
 const PizzaList = ({ title }) => {
     // pizza items and request status
-    const { pizzaItems, status } = useSelector(
-        (state) => state.pizzaSlice
-    );
+    const { pizzaItems, status } = useSelector((state) => state.pizzaSlice);
 
     // global state for sort and categories
     const { categoryId, sortType, searchValue, currentPage } =

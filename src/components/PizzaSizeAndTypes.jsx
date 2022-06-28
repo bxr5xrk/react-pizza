@@ -21,7 +21,7 @@ const PizzaSizeAndTypes = ({
                         className={sizeActive === i ? "active" : ""}
                         key={i}
                     >
-                        {size} см.
+                        {size.size} см.
                     </li>
                 ))}
             </ul>
