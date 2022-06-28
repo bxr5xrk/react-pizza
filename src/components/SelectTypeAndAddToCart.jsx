@@ -12,12 +12,6 @@ const SelectTypeAndAddToCart = ({ id }) => {
 
     const { pizzaEdges, pizzaItems, isPizzaPage } = useSelector(selectPizza);
 
-    const cartItem = useSelector((state) =>
-        state.cartSlice.pizzaItemsCart.find((obj) => id === obj.id)
-    );
-
-    const countItems = cartItem ? cartItem.count : 0;
-
     const { title, image, sizes, pizzaType } = isPizzaPage
         ? pizzaItems
         : pizzaItems.find((i) => i.id === id);
@@ -39,6 +33,17 @@ const SelectTypeAndAddToCart = ({ id }) => {
         };
         dispatch(addPizzaToCart(pizzaItem));
     };
+
+    const cartItem = useSelector((state) =>
+        state.cartSlice.pizzaItemsCart.find(
+            (obj) =>
+                id === obj.id &&
+                sizes[sizeActive].size === obj.size &&
+                pizzaEdges[typeActive] === obj.pizzaType
+        )
+    );
+
+    const countItems = cartItem ? cartItem.count : 0;
 
     return (
         <div>

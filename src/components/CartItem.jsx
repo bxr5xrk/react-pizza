@@ -9,9 +9,12 @@ import {
 const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
     const dispatch = useDispatch();
 
-    const onClickIncrement = () => dispatch(addPizzaToCart({ id }));
-    const onClickDecrement = () => dispatch(pizzaitemDecrement(id));
-    const onClickRemoveItem = () => dispatch(removePizzaFromCart(id));
+    const onClickIncrement = () =>
+        dispatch(addPizzaToCart({ id, size, pizzaType }));
+    const onClickDecrement = () =>
+        dispatch(pizzaitemDecrement({ id, size, pizzaType }));
+    const onClickRemoveItem = () =>
+        dispatch(removePizzaFromCart({ id, size, pizzaType }));
 
     return (
         <div className="cart__item">
@@ -20,7 +23,9 @@ const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
             </div>
             <div className="cart__item-info">
                 <h3>{title}</h3>
-                <p>{pizzaType}, {size} см.</p>
+                <p>
+                    {pizzaType}, {size} см.
+                </p>
             </div>
             <div className="cart__item-count">
                 <div

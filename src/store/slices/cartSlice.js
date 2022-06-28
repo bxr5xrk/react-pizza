@@ -18,7 +18,10 @@ const cartSlice = createSlice({
     reducers: {
         addPizzaToCart(state, action) {
             const findPizza = state.pizzaItemsCart.find(
-                (i) => i.id === action.payload.id
+                (i) =>
+                    i.id === action.payload.id &&
+                    i.size === action.payload.size &&
+                    i.pizzaType === action.payload.pizzaType
             );
 
             findPizza
@@ -29,22 +32,33 @@ const cartSlice = createSlice({
         },
         pizzaitemDecrement(state, action) {
             const findPizza = state.pizzaItemsCart.find(
-                (i) => i.id === action.payload
+                (i) =>
+                    i.id === action.payload.id &&
+                    i.size === action.payload.size &&
+                    i.pizzaType === action.payload.pizzaType
             );
+
             if (findPizza) {
                 findPizza.count--;
             }
             if (findPizza.count === 0) {
                 state.pizzaItemsCart = state.pizzaItemsCart.filter(
-                    (pizza) => pizza.id !== action.payload
+                    (pizza) => pizza !== findPizza
                 );
             }
 
             calculateTotalPrice(state);
         },
         removePizzaFromCart(state, action) {
+            const findPizza = state.pizzaItemsCart.find(
+                (i) =>
+                    i.id === action.payload.id &&
+                    i.size === action.payload.size &&
+                    i.pizzaType === action.payload.pizzaType
+            );
+
             state.pizzaItemsCart = state.pizzaItemsCart.filter(
-                (pizza) => pizza.id !== action.payload
+                (pizza) => pizza !== findPizza
             );
 
             calculateTotalPrice(state);
@@ -56,7 +70,7 @@ const cartSlice = createSlice({
     },
 });
 
-export const selectCart = (state) => state.cartSlice
+export const selectCart = (state) => state.cartSlice;
 
 export const {
     addPizzaToCart,
