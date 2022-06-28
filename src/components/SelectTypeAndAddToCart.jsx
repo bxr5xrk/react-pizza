@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPizzaToCart } from "../store/slices/cartSlice";
 import { selectPizza } from "../store/slices/pizzaSlice";
 import PizzaSizeAndTypes from "./PizzaSizeAndTypes";
@@ -12,11 +11,12 @@ const SelectTypeAndAddToCart = ({ id }) => {
 
     const { pizzaEdges, pizzaItems, isPizzaPage } = useSelector(selectPizza);
 
+    // for correctly display pizza page if it starter page
     const { title, image, sizes, pizzaType } = isPizzaPage
         ? pizzaItems
         : pizzaItems.find((i) => i.id === id);
 
-    // if edges active
+    // if edges active add 20 to price
     const totalPizzaPrice =
         pizzaType[typeActive] === 1
             ? sizes[sizeActive].price + 20
@@ -43,7 +43,8 @@ const SelectTypeAndAddToCart = ({ id }) => {
         )
     );
 
-    const countItems = cartItem ? cartItem.count : 0;
+    // pizza count
+    const countItem = cartItem ? cartItem.count : 0;
 
     return (
         <div>
@@ -75,7 +76,7 @@ const SelectTypeAndAddToCart = ({ id }) => {
                         />
                     </svg>
                     <span>Добавити</span>
-                    {countItems > 0 && <i>{countItems}</i>}
+                    {countItem > 0 && <i>{countItem}</i>}
                 </div>
             </div>
         </div>

@@ -9,13 +9,6 @@ import {
 const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
     const dispatch = useDispatch();
 
-    const onClickIncrement = () =>
-        dispatch(addPizzaToCart({ id, size, pizzaType }));
-    const onClickDecrement = () =>
-        dispatch(pizzaitemDecrement({ id, size, pizzaType }));
-    const onClickRemoveItem = () =>
-        dispatch(removePizzaFromCart({ id, size, pizzaType }));
-
     return (
         <div className="cart__item">
             <div className="cart__item-img">
@@ -29,7 +22,9 @@ const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
             </div>
             <div className="cart__item-count">
                 <div
-                    onClick={onClickDecrement}
+                    onClick={() =>
+                        dispatch(pizzaitemDecrement({ id, size, pizzaType }))
+                    }
                     className="button button--outline button--circle cart__item-count-minus"
                 >
                     <svg
@@ -51,7 +46,9 @@ const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
                 </div>
                 <b>{count}</b>
                 <div
-                    onClick={onClickIncrement}
+                    onClick={() =>
+                        dispatch(addPizzaToCart({ id, size, pizzaType }))
+                    }
                     className="button button--outline button--circle cart__item-count-plus"
                 >
                     <svg
@@ -77,7 +74,9 @@ const CartItem = ({ id, title, image, price, count, size, pizzaType }) => {
             </div>
             <div className="cart__item-remove">
                 <div
-                    onClick={onClickRemoveItem}
+                    onClick={() =>
+                        dispatch(removePizzaFromCart({ id, size, pizzaType }))
+                    }
                     className="button button--outline button--circle"
                 >
                     <svg
