@@ -20,7 +20,7 @@ const Pagination = ({ category }) => {
 
     const pages = Math.ceil(totalPages / limitItemsOnPage);
 
-    const { currentPage, searchValue } = useSelector(selectFilter);
+    const { page, searchValue } = useSelector(selectFilter);
     const dispatch = useDispatch();
     const changePage = (page) => dispatch(onChangePage(page));
 
@@ -28,10 +28,10 @@ const Pagination = ({ category }) => {
         <div>
             {!searchValue ? (
                 <div className={st.pagination}>
-                    {currentPage > 1 ? (
+                    {page > 1 ? (
                         <span
                             className={st.page}
-                            onClick={() => changePage(currentPage - 1)}
+                            onClick={() => changePage(page - 1)}
                         >
                             {"<"}
                         </span>
@@ -44,7 +44,7 @@ const Pagination = ({ category }) => {
                             <span
                                 onClick={() => changePage(p + 1)}
                                 className={
-                                    p + 1 === currentPage
+                                    p + 1 === page
                                         ? `${st.page} ${st.page__selected}`
                                         : st.page
                                 }
@@ -54,10 +54,10 @@ const Pagination = ({ category }) => {
                             </span>
                         ))}
 
-                    {currentPage < pages ? (
+                    {page < pages ? (
                         <span
                             className={st.page}
-                            onClick={() => changePage(currentPage + 1)}
+                            onClick={() => changePage(page + 1)}
                         >
                             {">"}
                         </span>

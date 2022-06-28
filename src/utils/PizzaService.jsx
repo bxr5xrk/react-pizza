@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { sortTypes } from "../components/Sort";
 import { setSearch } from "../store/slices/filterSlice";
 
-export const ReadAndWriteQueryString = (categoryId, currentPage, sortType) => {
+export const ReadAndWriteQueryString = (categoryId, page, sortType) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isMounted, setIsMounted] = useState(false);
@@ -27,12 +27,12 @@ export const ReadAndWriteQueryString = (categoryId, currentPage, sortType) => {
     useEffect(() => {
         if (isMounted) {
             const queryString = QueryString.stringify({
-                currentPage,
+                page,
                 categoryId,
                 sortProp: sortType.sortProp,
             });
             navigate(`?${queryString}`);
         }
         setIsMounted(true);
-    }, [categoryId, currentPage, sortType]);
+    }, [categoryId, page, sortType]);
 };

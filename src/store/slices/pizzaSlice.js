@@ -13,10 +13,10 @@ const initialState = {
 export const fetchPizzaItems = createAsyncThunk(
     "pizza/fetchPizzaStatus",
 
-    async ({ sortType, currentPage, searchValue, category }) => {
+    async ({ sortType, page, searchValue, category }) => {
         const sort = sortType.sortProp.replace("-", "");
         const sortOrder = sortType.sortProp.includes("-") ? "asc" : "desc";
-        const pageLimit = `&p=${currentPage}&l=${initialState.limitItemsOnPage}`;
+        const pageLimit = `&p=${page}&l=${initialState.limitItemsOnPage}`;
         const searchPizza = searchValue ? "" : pageLimit;
 
         const { data } = await axios.get(

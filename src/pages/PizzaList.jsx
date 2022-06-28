@@ -5,7 +5,7 @@ import Pagination from "../components/Pagination/Pagination";
 import PizzaFilter from "../components/PizzaFilter";
 import Pizza from "../components/PizzaItem";
 import PizzaSkeleton from "../components/PizzaSkeleton";
-import { ReadAndWriteQueryString } from "../API/PizzaService";
+import { ReadAndWriteQueryString } from "../utils/PizzaService";
 import { fetchPizzaItems } from "../store/slices/pizzaSlice";
 import { selectFilter } from "../store/slices/filterSlice";
 
@@ -14,7 +14,7 @@ const PizzaList = ({ title }) => {
     const { pizzaItems, status } = useSelector((state) => state.pizzaSlice);
 
     // global state for sort and categories
-    const { categoryId, sortType, searchValue, currentPage } =
+    const { categoryId, sortType, searchValue, page } =
         useSelector(selectFilter);
 
     // generate empty items for skeleton
@@ -31,7 +31,7 @@ const PizzaList = ({ title }) => {
             dispatch(
                 fetchPizzaItems({
                     sortType,
-                    currentPage,
+                    page,
                     searchValue,
                     category,
                 })
@@ -39,10 +39,10 @@ const PizzaList = ({ title }) => {
         }
 
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, currentPage, searchValue]);
+    }, [categoryId, sortType, page, searchValue]);
 
     // for reading search query
-    ReadAndWriteQueryString(categoryId, currentPage, sortType);
+    ReadAndWriteQueryString(categoryId, page, sortType);
 
     // show only those pizzas, that match search
     const filteredPizza = pizzaItems
