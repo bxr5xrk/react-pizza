@@ -157,12 +157,12 @@ body {
   }
 
   .content__items {
-    // display: block;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-column-gap: 11px;
-    justify-items: center;
+    display: block;
+    // display: grid;
+    // grid-template-columns: repeat(4, 1fr);
+    // grid-template-rows: repeat(1, 1fr);
+    // grid-column-gap: 11px;
+    // justify-items: center;
   }
 
   &__item {
