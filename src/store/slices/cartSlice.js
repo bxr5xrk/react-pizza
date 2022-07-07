@@ -30,25 +30,6 @@ const cartSlice = createSlice({
 
             calculateTotalPrice(state);
         },
-        pizzaitemDecrement(state, action) {
-            const findPizza = state.pizzaItemsCart.find(
-                (i) =>
-                    i.id === action.payload.id &&
-                    i.size === action.payload.size &&
-                    i.pizzaType === action.payload.pizzaType
-            );
-
-            if (findPizza) {
-                findPizza.count--;
-            }
-            if (findPizza.count === 0) {
-                state.pizzaItemsCart = state.pizzaItemsCart.filter(
-                    (pizza) => pizza !== findPizza
-                );
-            }
-
-            calculateTotalPrice(state);
-        },
         removePizzaFromCart(state, action) {
             const findPizza = state.pizzaItemsCart.find(
                 (i) =>
@@ -63,6 +44,24 @@ const cartSlice = createSlice({
 
             calculateTotalPrice(state);
         },
+        pizzaitemDecrement(state, action) {
+            const findPizza = state.pizzaItemsCart.find(
+                (i) =>
+                    i.id === action.payload.id &&
+                    i.size === action.payload.size &&
+                    i.pizzaType === action.payload.pizzaType
+            );
+
+            if (findPizza) {
+                findPizza.count--;
+            }
+            if (findPizza.count === 0) {
+                cartSlice.caseReducers.removePizzaFromCart(state, action);
+            }
+
+            calculateTotalPrice(state);
+        },
+
         clearPizzaCart(state) {
             state.pizzaItemsCart = [];
             state.totalPrice = 0;
